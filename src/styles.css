@@ -1,0 +1,79 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 10;
+}
+
+.site-title {
+    font-size: 3rem;
+}
+
+.nav {
+    background-color: #6133ff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.favorites {
+    border:1px solid black;
+    color:black;
+    background-color: #6133ff;
+    font-size: 1rem;
+    padding-bottom: 1rem;
+    width: 50%;
+    height: 30%;
+    position: relative;
+    display: inline-block;
+    height: auto;
+}
+
+.profile-picture {
+    padding-top: 1rem;
+}
+
+.nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav a {
+    color: inherit;
+    font-family: "Lucida Console", "Courier New", monospace;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    padding: .25rem;
+}
+
+.nav li.active {
+    background-color: #555;
+}
+
+.nav li:hover {
+    background-color: #777;
+}
+
+
+.welcome {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 5rem;
+}
+
+.main {
+    text-align: center;
+}
+
+.button {
+    font-family: "Lucida Console", "Courier New", monospace;
+    background-color:#6133ff;
+    border: black;
+    font-size: 2rem;
+}
