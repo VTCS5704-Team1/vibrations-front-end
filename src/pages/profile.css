@@ -1,0 +1,70 @@
+
+/* Container for the profile section and favorite music section */
+.container {
+    display: flex;
+    background-color: #fff;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 0;
+    height: 100vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Profile section styles */
+  .profile {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  
+  .profile h2 {
+    margin: 10px 0;
+    font-size: 50px;
+  }
+  
+  .profile p {
+    font-size: 16px;
+  }
+  
+  /* Favorite music section styles */
+  .favorite-music {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  
+  .favorite-music h2 {
+    margin: 0 0 20px;
+    font-size: 40px;
+  }
+  
+  .favorite-music p {
+    font-size: 30px;
+    margin: 10px 0;
+  }
+  
+  .favorite-music .label {
+    font-weight: bold;
+  }
+
+  /* Media query for responsiveness */
+@media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .profile,
+    .favorite-music {
+      width: 100%;
+    }
+  }
+  
+  
