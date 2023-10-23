@@ -5,6 +5,7 @@ import Settings from "./pages/settings";
 import Matches from "./pages/matches";
 import { Route, Routes } from "react-router-dom"
 import Home from "./pages/Home";
+import WebApp from "./WebApp";
 
 
 function App() {
