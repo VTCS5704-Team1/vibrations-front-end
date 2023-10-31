@@ -1,0 +1,24 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: "Container Image"
+        required: true
+        type: string
+        default: ghcr.io/vtcs5704-team1/vib/ui:latest
+
+jobs:
+  deploy:
+    name: Deploy to Amazon ECR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push to ECR
+        id: ecr
+        uses: jwalton/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          image: ${{ inputs.image }}
