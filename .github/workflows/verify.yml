@@ -1,0 +1,33 @@
+name: Verify Docker image
+
+on:
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+    name: Image Build/Verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2.9.1
+        
+      - name: Log into Container Register
+        uses: docker/login-action@v2.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USER }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Build and push Docker Image
+        uses: docker/build-push-action@v4.1.1
+        with:
+          push: false
+          tags: ghcr.io/vtcs5704-team1/vib/ui:latest, ghcr.io/vtcs5704-team1/vib/ui:${{ github.sha }}
