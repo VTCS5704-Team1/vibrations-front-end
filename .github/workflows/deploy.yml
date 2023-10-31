@@ -2,6 +2,12 @@ name: Deployment
 
 on:
   workflow_dispatch:
+    inputs:
+      image:
+        description: "Container Image"
+        required: true
+        type: string
+        default: ghcr.io/vtcs5704-team1/vib/ui:5f2240b7ca7e4240c6ffd98064e1e90bff034d71
 
 jobs:
   deploy:
@@ -15,4 +21,4 @@ jobs:
           access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: us-east-1
-          image: ghcr.io/vtcs5704-team1/vib/ui:5f2240b7ca7e4240c6ffd98064e1e90bff034d71 #TODO: CHANGE TAG TO 'LATEST'
+          image: ${{ inputs.image }}
