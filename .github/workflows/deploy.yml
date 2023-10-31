@@ -7,7 +7,7 @@ on:
         description: "Container Image"
         required: true
         type: string
-        default: ghcr.io/vtcs5704-team1/vib/ui:5f2240b7ca7e4240c6ffd98064e1e90bff034d71
+        default: ghcr.io/vtcs5704-team1/vib/ui:latest
 
 jobs:
   deploy:
