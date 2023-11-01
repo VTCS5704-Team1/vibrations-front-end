@@ -8,7 +8,7 @@ RUN npm install && \
     npm run build
 
 
-FROM ghcr.io/vtcs5704-team1/nginx/vib:babeca0b7941814aaa7b35f63fa654a87f4b4465
+FROM ghcr.io/vtcs5704-team1/nginx/vib:6439031bf31bc4b3d772abc894c09edded8f406c 
 
 
 COPY --from=build /tmp/build /usr/share/nginx/html
