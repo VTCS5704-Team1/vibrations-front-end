@@ -6,8 +6,16 @@ body {
     margin: 10;
 }
 
+
 .site-title {
     font-size: 3rem;
+}
+
+.container {
+    background-color: #f2f0f8;
+    border: black;
+    display: flex;
+    align-items: center;
 }
 
 .nav {
@@ -18,8 +26,25 @@ body {
     padding: 10px;
 }
 
+.favorites {
+    border:1px solid black;
+    color:black;
+    background-color: #6133ff;
+    font-size: 1rem;
+    padding-bottom: 1rem;
+    width: 50%;
+    height: 30%;
+    position: relative;
+    display: inline-block;
+    height: auto;
+}
+
+.profile-picture {
+    padding-top: 1rem;
+}
 
 .nav ul {
+    vertical-align: center;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -55,9 +80,3 @@ body {
     text-align: center;
 }
 
-.button {
-    font-family: "Lucida Console", "Courier New", monospace;
-    background-color:#6133ff;
-    border: black;
-    font-size: 2rem;
-}

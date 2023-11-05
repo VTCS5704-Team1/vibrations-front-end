@@ -1,0 +1,30 @@
+.opening-screen {
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid #111010;
+    background-color: #f7d3f7;
+    padding: 10px;
+}
+
+.open-header {
+    padding: 10px;
+    text-align: center;
+  }
+
+.button-container {
+    padding: 10px;
+  }
+  
+  .button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
+

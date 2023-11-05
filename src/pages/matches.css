@@ -1,0 +1,97 @@
+.messenger-window {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.messenger-header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: gainsboro;
+    padding: 10px;
+    text-align: center;
+}
+
+.messenger-header h1 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.messenger-body {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.matches-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.matches-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.match-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.send-message-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.send-message-dialogue {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.send-message-dialogue input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.send-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+.send-message-button.close-button {
+    background-color: #fff;
+    color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}

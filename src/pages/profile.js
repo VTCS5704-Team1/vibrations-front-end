@@ -1,8 +1,15 @@
 
+import React, { useState } from 'react';
 import './profile.css'
+import Navbar from '../Navbar';
+import { Button } from 'react-bootstrap';
+import EditProfileDialogue from './EditProfile';
 
 export default function Profile() {
-    
+    const [profileIsCreated, setProfileIsCreated] = useState(false);
+
+    // once their profile is created, then they can see all their profile data
+
     const profileData = {
         name: 'Sarah Jane',
         bio: 'My name is Sarah and I love listening to music in my free time and while Im studying!',
@@ -13,7 +20,9 @@ export default function Profile() {
       };
     
       return (
-        <div className="container">
+        <div >
+          <Navbar />
+          <div className='container'>
           <div className="profile">
             <img src={profileData.profilePicture} alt="Profile" className="profile-picture" />
             <h2>{profileData.name}</h2>
@@ -24,7 +33,8 @@ export default function Profile() {
             <p><strong>Favorite Artist:</strong> {profileData.favoriteArtist}</p>
             <p><strong>Favorite Genre:</strong> {profileData.favoriteGenre}</p>
           </div>
-
+          </div>
+          <EditProfileDialogue />
         </div>
       );
     
