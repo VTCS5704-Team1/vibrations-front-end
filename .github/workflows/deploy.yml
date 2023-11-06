@@ -1,0 +1,42 @@
+name: Deployment to Amazon ECR
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: "Container Image"
+        required: true
+        type: string
+        default: ghcr.io/vtcs5704-team1/vib/ui:latest
+
+jobs:
+  deploy:
+    name: Deploy to Amazon ECR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      
+      - name: Log into Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Push image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: | 
+          docker pull ${{ inputs.image }}
+          docker tag ${{ inputs.image }} $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag ${{ inputs.image }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      
+      - name: Logout of ECR
+        if: always()
+        run: docker logout ${{ steps.login-ecr.outputs.registry }}
