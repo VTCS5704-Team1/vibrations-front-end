@@ -1,22 +1,13 @@
 
 /* Container for the profile section and favorite music section */
-.container {
-    display: flex;
-    background-color: #fff;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-bottom: 0;
-    height: 100vh;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    overflow: hidden;
-  }
   
   /* Profile section styles */
   .profile {
     flex: 1;
     padding: 20px;
     text-align: center;
+    
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
   }
   
   .profile img {
@@ -33,12 +24,17 @@
   .profile p {
     font-size: 16px;
   }
+
+  .bio {
+    width: 300px;
+  }
   
   /* Favorite music section styles */
   .favorite-music {
     flex: 1;
     padding: 20px;
     background-color: #f4f4f4;
+    font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
   }
   
   .favorite-music h2 {

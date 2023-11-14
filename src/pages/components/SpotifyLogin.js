@@ -32,6 +32,7 @@ export default function SpotifyLogin() {
     
     const [topArtist, setTopArtist] = useState([]);
     const[topSong, setTopSong] = useState([]);
+    const[isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (window.location.hash) {
@@ -81,9 +82,16 @@ export default function SpotifyLogin() {
     }
 
     return (
-        <>
-          <button onClick={handleLogin}>login to spotify</button>
-          <button onClick={() => {
+        <div>
+            <>
+            <p> To access your spotify data, log in to Spotify:</p>
+            <button onClick={() => {
+                handleLogin();
+                setIsLoggedIn(true);
+            }}>Spotify Login</button>
+            </>
+            <>
+            <button onClick={() => {
                 getTopArtist();
                 getTopSong();
             }}> Autofill from Spotify </button>
@@ -104,5 +112,6 @@ export default function SpotifyLogin() {
                 )
             })}
         </>
-    );
-}
+        </div>
+    )
+        }

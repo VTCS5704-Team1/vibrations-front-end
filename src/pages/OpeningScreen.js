@@ -3,11 +3,13 @@ import {
   Link
 } from 'react-router-dom';
 import './openingScreen.css';
+import logo from './vib_logo.jpg';
 
 export default function OpeningScreen() {
     return (
-        <div className="opening-screen">
-        <h1 className='open-header'> Welcome to Vibrations!</h1>
+        <div className="small-vertical-container">
+        <img src={logo} alt='logo' className="img"/>
+        <h1> Welcome to Vibrations!</h1>
         <div className='button-container'>
             <LoginButton/>
             <SignUpButton/>
