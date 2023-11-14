@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './profile.css'
 import Navbar from '../Navbar';
 import { Button } from 'react-bootstrap';
-import EditProfileDialogue from './EditProfile';
+import EditProfile from './EditProfile';
 
 export default function Profile() {
     const [profileIsCreated, setProfileIsCreated] = useState(false);
@@ -22,7 +22,9 @@ export default function Profile() {
       return (
         <div >
           <Navbar />
-          <div className='container'>
+          <div className='vertical-container'>
+            <h1> {profileData.name}'s Profile </h1>
+          <div className="container">
           <div className="profile">
             <img src={profileData.profilePicture} alt="Profile" className="profile-picture" />
             <h2>{profileData.name}</h2>
@@ -34,7 +36,8 @@ export default function Profile() {
             <p><strong>Favorite Genre:</strong> {profileData.favoriteGenre}</p>
           </div>
           </div>
-          <EditProfileDialogue />
+          <EditProfile />
+        </div>
         </div>
       );
     

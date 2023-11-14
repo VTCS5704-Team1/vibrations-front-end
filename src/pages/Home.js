@@ -14,25 +14,24 @@ const Homepage = () => {
             imageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg',
         },
         {
-            name: 'Jane Doe',
+            name: 'John Doe',
+            imageUrl: 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
             description: 'I enjoy hiking and reading books!',
             favoriteSong: 'Shape of You',
             favoriteArtist: 'Ed Sheeran',
             favoriteGenre: 'Pop',
         },
     ]);
+
+    const[favorites, setFavorites] = useState([]);
+
     const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
 
     // Handle liking a profile
     const handleLikeProfile = () => {
         // Update the matched profiles and current profile index
-        const updatedMatchedProfiles = [...matchedProfiles];
-        updatedMatchedProfiles.splice(currentProfileIndex, 1);
-        setMatchedProfiles(updatedMatchedProfiles);
-
-        if (currentProfileIndex === updatedMatchedProfiles.length) {
-            setCurrentProfileIndex(0);
-        }
+        favorites.push(matchedProfiles[currentProfileIndex]);
+        console.log(favorites);
     };
 
     // Handle switching between profiles
@@ -53,43 +52,34 @@ const Homepage = () => {
     };
 
     return (
-        <div className="homepage">
+        <div>
             <Navbar />
-            <div className="profile">
-                <div className="top-bar">
-
+            <div className='vertical-container'>
+                <h1> not sure what we want to call this page </h1>
+                <div className='top-bar'>
+                        <button onClick={handleLikeProfile} className='star-button'>
+                            <FaStar style={{ fontSize: '2em' }} />
+                        </button>
                 </div>
-                <div className="profile-info">
-                    <img src={matchedProfiles[currentProfileIndex].imageUrl} alt="Profile" />
-                    <div className="info">
-                        <div className="name">{matchedProfiles[currentProfileIndex].name}</div>
-                        <div className="description">{matchedProfiles[currentProfileIndex].description}</div>
-                        <div className="favorites">
-                            <div className="favorite">
-                                <div className="label">Favorite Song:</div>
-                                <div className="value">{matchedProfiles[currentProfileIndex].favoriteSong}</div>
-                            </div>
-                            <div className="favorite">
-                                <div className="label">Favorite Artist:</div>
-                                <div className="value">{matchedProfiles[currentProfileIndex].favoriteArtist}</div>
-                            </div>
-                            <div className="favorite">
-                                <div className="label">Favorite Genre:</div>
-                                <div className="value">{matchedProfiles[currentProfileIndex].favoriteGenre}</div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="container">
+                <div className="profile">
+                        <img src={matchedProfiles[currentProfileIndex].imageUrl} alt="Profile" />
+                        <h2>{matchedProfiles[currentProfileIndex].name}</h2>
+                        <p>{matchedProfiles[currentProfileIndex].description}</p>
                 </div>
-                <div className="bottom-bar">
-                    <div className="arrow" onClick={handlePreviousProfile}>
+                <div className="favorite-music">
+                        <p><strong>Favorite Song:</strong> {matchedProfiles[currentProfileIndex].favoriteSong}</p>
+                        <p><strong>Favorite Artist:</strong> {matchedProfiles[currentProfileIndex].favoriteArtist}</p>
+                        <p><strong>Favorite Genre:</strong> {matchedProfiles[currentProfileIndex].favoriteGenre}</p>
+                </div>
+                </div>
+                <div className="button-container"> 
+                    <div className="button" onClick={handlePreviousProfile}>
                         &lt;
                     </div>
-                    <div className="arrow" onClick={handleNextProfile}>
+                    <div className="button" onClick={handleNextProfile}>
                         &gt;
-                    </div>
-                    <div className="star" onClick={handleLikeProfile}>
-                        <FaStar />
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

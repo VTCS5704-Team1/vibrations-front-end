@@ -1,4 +1,5 @@
-import React, {useState} from "react"
+import React, {useState} from "react";
+import logo from './vib_logo.jpg';
 
 function LoginPage({ onLogin }) {
     const [username, setUsername] = useState('');
@@ -10,10 +11,12 @@ function LoginPage({ onLogin }) {
     }
   
     return (
+      <div className="small-vertical-container">
+        <img src={logo} alt='logo' className="img"/>
       <div className="login-page">
         <h2>Login</h2>
         <form>
-          <div>
+          <div className="input-box">
           <label htmlFor="username">Username:</label>
           <input
             type="text"
@@ -22,7 +25,7 @@ function LoginPage({ onLogin }) {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div>
+        <div className="input-box">
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -31,10 +34,11 @@ function LoginPage({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="button" onClick={handleUserLogin}>
+        <button className="button" onClick={handleUserLogin}>
         Login
         </button>
       </form>
+    </div>
     </div>
   );
 }

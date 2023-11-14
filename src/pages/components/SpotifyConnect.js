@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import SpotifyLogin from "./pages/components/SpotifyLogin";
+import SpotifyLogin from "./SpotifyLogin";
 
 
 const CLIENT_ID = "216ab5f16d6344838e5ff26a33888a6c";
