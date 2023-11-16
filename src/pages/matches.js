@@ -5,8 +5,8 @@ import './matches.css'
 
 const MessengerWindow = () => {
     const [matches, setMatches] = useState([
-        { name: 'Sarah Lou', profileImageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg' },
-        { name: 'Tim Tom', profileImageUrl: 'https://i.pinimg.com/236x/03/c0/ca/03c0cad4b7411bab862fa1a69decf6b5.jpg' },
+        { name: 'Sarah', profileImageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg' },
+        { name: 'Tim', profileImageUrl: 'https://i.pinimg.com/236x/03/c0/ca/03c0cad4b7411bab862fa1a69decf6b5.jpg' },
     ]);
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [messageInput, setMessageInput] = useState('');

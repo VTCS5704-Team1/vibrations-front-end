@@ -16,8 +16,8 @@ export default function SignUp({onSignUp}) {
     console.log('Name:', name);
     console.log('Phone Number:', phoneNumber);
     console.log('Email:', email);
-    navigate("/CreateProfile");
     onSignUp();
+    navigate("/CreateProfile");
   };
   
 
