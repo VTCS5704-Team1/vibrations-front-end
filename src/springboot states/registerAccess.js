@@ -1,22 +1,34 @@
-import { useCallback, useState } from 'react'; 
+import axios from "axios";
 
-const accessStateRegister = (props) => {
+const accessStateRegister = () => {
   var authParameters = {
-    method: 'POST',
+    method: 'GET',
 
-    // needs to be JSON request body 
+    headers: {
+      "Content-type": "application/json",
+    },
+
+
     body: {
-        "email": "davidfc@vt.edu",
-        "password": "Password123!",
-        "name": "David",
-        "image": "http://img2.wikia.nocookie.net/__cb20131129221253/fantendo/images/7/74/Donkey_Kong_Profile_Artwork.jpg",
-        "gender": "Male",
-        "birthdate": "2000-04-17"
-    }
+        email: "davidfc@vt.edu",
+        password: "HelloWorld123!"
+    },
+  }
+
+  const postData = {
+    email: "davidfc@vt.edu",
+    password: "HelloWorld123!"
+  }
+
+  try {
+    axios.post("http://localhost:5000/api/users/login", postData, {
+      headers: {"Content-type": "application/json"}
+    }).then(resp => {
+      console.log(resp)
+    })
+  } catch (error) {
+    console.log("Error!", error)
+  }
 }
 
-  const getAuth = useCallback(() => {
-      fetch('localHost:5000/api/users/login')
-      .then()
-  })
-}
+export default accessStateRegister
