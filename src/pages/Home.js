@@ -6,7 +6,7 @@ import {useState} from "react";
 const Homepage = () => {
     const [matchedProfiles, setMatchedProfiles] = useState([
         {
-            name: 'Sarah Lou',
+            name: 'Sarah',
             description: 'I love listening to music when I work out and when I study!',
             favoriteSong: 'Radioactive',
             favoriteArtist: 'Maroon 5',
@@ -14,7 +14,7 @@ const Homepage = () => {
             imageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg',
         },
         {
-            name: 'John Doe',
+            name: 'John',
             imageUrl: 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
             description: 'I enjoy hiking and reading books!',
             favoriteSong: 'Shape of You',
@@ -81,6 +81,7 @@ const Homepage = () => {
                         &gt;
                     </div> 
                 </div>
+                
             </div>
         </div>
     );

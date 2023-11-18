@@ -11,7 +11,7 @@ export default function Profile() {
     // once their profile is created, then they can see all their profile data
 
     const profileData = {
-        name: 'Sarah Jane',
+        name: 'Sarah',
         bio: 'My name is Sarah and I love listening to music in my free time and while Im studying!',
         favoriteSong: 'Blank Space - Taylor Swift',
         favoriteArtist: 'Lady Gaga',

@@ -2,6 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import React, { useState } from 'react';
 import Editer from './components/Editer';
+import './EditProfile.css';
 
 export default function EditProfile() {
   const [open, setOpen] = React.useState(false);
@@ -25,9 +26,9 @@ export default function EditProfile() {
       <button className="button" variant="outlined" onClick={handleClickOpen}>
         Edit Profile
       </button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} maxWidth="xl">
         <h2>Edit Profile</h2>
-        <div className="modal-content">
+        <div className="modal-content" >
           <Editer/>
           <DialogActions>
             <button onClick={handleClose}>Cancel</button>
