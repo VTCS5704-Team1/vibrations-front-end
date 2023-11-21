@@ -79,6 +79,11 @@ body {
     margin-bottom: 10px;
 }
 
+.input-box > .errorLabel {
+    color: red;
+    font-size: 12px;
+  }
+
 /* CSS */
 .button {
   background-color: #222;

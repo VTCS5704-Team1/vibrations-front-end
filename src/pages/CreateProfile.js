@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import Editer from "./components/Editer";
-
+import axios from "axios";
 
 export default function CreateProfile({onCreate}) {
     const navigate = useNavigate();

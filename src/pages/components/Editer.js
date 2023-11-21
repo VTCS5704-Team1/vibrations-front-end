@@ -12,6 +12,9 @@ export default function Editer() {
     const [searchSongInput, setSearchSongInput ] = useState("");
     const [bio, setBio] =  useState("");
 
+    // access API using auth token 
+    
+
 
     return ( 
         <div className="container">

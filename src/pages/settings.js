@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import ChangePassword from '../springboot states/changePasswordAccess';
+
 
 export default function Settings({onLogOut}) {
 
@@ -11,12 +15,6 @@ export default function Settings({onLogOut}) {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [radius, setRadius] = useState('');
-
-  // Function to handle password change
-  const handleChangePassword = () => {
-    // Implement password change logic here
-    console.log('Password changed successfully!');
-  };
 
   // Function to handle account deletion
   const handleDeleteAccount = () => {
@@ -30,6 +28,30 @@ export default function Settings({onLogOut}) {
     console.log('Location/limits changed successfully!');
   };
 
+  const navigate = useNavigate();
+
+
+  var storedJsonString = localStorage.getItem('user');
+
+ // Parse the JSON string back into an object
+  var storedUserObject = JSON.parse(storedJsonString);
+
+  // Display the access token in the console
+  console.log("Access Token:", storedUserObject.token);
+
+  
+  const handleLogout = () => {
+
+    axios.post("http://localhost:5000/api/users/logout", {}, {
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + storedUserObject.token
+        }
+    }).then(resp => console.log(resp));
+    onLogOut();
+    navigate('/');
+  };
+
   
      return (
 
@@ -38,37 +60,8 @@ export default function Settings({onLogOut}) {
         <div className='vertical-container'>
         <h1> Account Settings </h1>
         <div className='center-vertical-container'>
-        <h3>Change Password</h3>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label>
-            Current Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            New Password:
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Confirm Password:
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <button onClick={handleChangePassword}>Change Password</button>
-        </form>
+
+          <ChangePassword token={storedUserObject.token}/>
         <h3>Change GPS Location/Limits</h3>
         <form onSubmit={(e) => e.preventDefault()}>
           <p> this will use the gps API</p>
@@ -77,7 +70,7 @@ export default function Settings({onLogOut}) {
         <h3>Delete Account</h3>
         <button onClick={handleDeleteAccount}>Delete Account</button>
       </div>
-        <button onClick={onLogOut} className='button'>Logout</button>
+        <button onClick={handleLogout} className='button' type="button">Logout</button>
       </ div>
       </div>
 

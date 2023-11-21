@@ -14,12 +14,10 @@ import CreateProfile from "./pages/CreateProfile";
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Handle login logic, set isLoggedIn to true
     setIsLoggedIn(true);
-    navigate("/home");
     
   };
 
@@ -29,7 +27,6 @@ function App() {
 
   const handleLogOut = () => {
     setIsLoggedIn(false);
-    navigate("/");
   }
 
   return (
