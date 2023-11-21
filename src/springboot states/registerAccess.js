@@ -1,19 +1,6 @@
 import axios from "axios";
 
 const accessStateRegister = () => {
-  var authParameters = {
-    method: 'GET',
-
-    headers: {
-      "Content-type": "application/json",
-    },
-
-
-    body: {
-        email: "davidfc@vt.edu",
-        password: "HelloWorld123!"
-    },
-  }
 
   const postData = {
     email: "davidfc@vt.edu",
