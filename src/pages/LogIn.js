@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import logo from './vib_logo.jpg';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import LogInAccess from "../springboot states/loginAccess";
 
 function LoginPage({ onLogin }) {
     const [email, setEmail] = useState("");
@@ -36,75 +37,8 @@ function LoginPage({ onLogin }) {
       console.log("logging in");
       console.log(email);
       console.log(password); 
-      logIn();
+      <LogInAccess email={email} password={password} onLogin={onLogin}/>;
     }
-
-    const logIn = () => {
-
-      try {
-
-        axios.post("http://localhost:5000/api/users/login", {
-        email: email,
-        password: password
-      }, {
-        headers: {"Content-type": "application/json"}
-      }).then(r => {
-        console.log(r.data);
-        localStorage.setItem("user", JSON.stringify({email, token: r.data.accessToken}))
-
-              // Retrieve the JSON string from local storage
-        var storedJsonString = localStorage.getItem('user');
-
-            // Parse the JSON string back into an object
-        var storedUserObject = JSON.parse(storedJsonString);
-
-            // Display the access token in the console
-        console.log("Access Token:", storedUserObject.token);
-        setEmail(email)
-        onLogin();
-        navigate("/home");
-      }) .catch(error => {
-        console.error("Error during login:", error);
-        window.alert("Wrong email or password");
-      });
-      } catch (error) {
-        window.alert("Wrong email or password")
-      }
-
-    }
-
-/*       // Check if email has an account associated with it
-      checkAccountExists(accountExists => {
-        // If yes, log in 
-        if (accountExists) {
-          logIn();
-          navigate("/home");
-          onLogin();
-        }
-        else
-          window.alert("An account with email " + email + " does not exist.")
-      }) 
-    } */
-
- 
-
-
-/*     // end point
-    // If you don't want to implement we can remove 
-    const checkAccountExists = (callback) => {
-      fetch("http://localhost:5000/check-account", {
-        method: "POST",
-        headers: {
-          'Content-Type' : 'application/json'
-        },
-        body :JSON.stringify({email})
-      })
-      .then(r => r.json())
-      .then(r => {
-        callback(r?.userExists)
-      })
-    }
-/*  */
     
    
     

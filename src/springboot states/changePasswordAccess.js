@@ -30,22 +30,25 @@ export default function ChangePassword() {
                 window.alert('New passwords do not match.');
                 return;
             }
-            
-            axios.post("http://localhost:5000/api/users/change/password", {
-            "email": email,
-            "oldPassword": currentPassword,
-            "newPassword": newPassword
-            }, {
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": "Bearer " + token
-            }
+            axios({
+              method: "post",
+              url: "http://localhost:5000/api/users/change/password",
+              headers: {
+                'Authorization': 'Bearer ' + storedUserObject.token,
+                "Content-type": "application/json"
+              },
+              data: {
+                "email": email,
+                "oldPassword": currentPassword,
+                "newPassword": newPassword
+              },
+            })
 
-            }).then(resp => console.log(resp))
+            .then(resp => console.log(resp))
             .catch(error => {
                 console.log(error);
                 window.alert('Error in changing your password');
-            }); 
+            });
             
         } 
         catch (error) {
