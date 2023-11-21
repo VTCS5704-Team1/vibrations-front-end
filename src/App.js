@@ -27,6 +27,11 @@ function App() {
     setIsLoggedIn(true);
   }
 
+  const handleLogOut = () => {
+    setIsLoggedIn(false);
+    navigate("/");
+  }
+
   return (
   <div className="main">
     <div>
@@ -35,16 +40,16 @@ function App() {
             <Routes>
               <Route path="/" element={<OpeningScreen />} />
               <Route path="/SignUp" element={<SignUp onSignUp ={handleSignUp}/>} />
-              <Route path="/CreateProfile" element={<CreateProfile onCreate={handleLogin}/>} />
               <Route path="/LogIn" element={<LogIn onLogin={handleLogin} />} />
             </Routes>
             </>
           ) : (
               <>
               <Routes>
+              <Route path="/CreateProfile" element={<CreateProfile />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/settings" element={<Settings onLogOut ={handleLogOut} />} />
               <Route path="/matches" element={<Matches />} />
               </Routes>
               </>

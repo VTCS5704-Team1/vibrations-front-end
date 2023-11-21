@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
+import accessStateRegister from '../springboot states/registerAccess';
 
 export default function SignUp({onSignUp}) {
   const [name, setName] = useState('');
@@ -11,13 +12,16 @@ export default function SignUp({onSignUp}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    accessStateRegister()
+
     // You can handle the form data submission here.
     // For this example, we'll just display the input values.
     console.log('Name:', name);
     console.log('Phone Number:', phoneNumber);
     console.log('Email:', email);
-    navigate("/CreateProfile");
     onSignUp();
+    navigate("/CreateProfile");
   };
   
 

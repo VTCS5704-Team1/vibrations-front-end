@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar';
-import Logout from './components/LogOut';
 
-export default function Settings() {
-
+export default function Settings({onLogOut}) {
 
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -31,6 +29,7 @@ export default function Settings() {
     // Implement location/limits change logic here
     console.log('Location/limits changed successfully!');
   };
+
   
      return (
 
@@ -77,9 +76,9 @@ export default function Settings() {
         </form>
         <h3>Delete Account</h3>
         <button onClick={handleDeleteAccount}>Delete Account</button>
-        </div>
-          <Logout />
-        </div>
+      </div>
+        <button onClick={onLogOut} className='button'>Logout</button>
+      </ div>
       </div>
 
      );
