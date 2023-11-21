@@ -1,34 +1,26 @@
 import axios from "axios";
+import {observable } from "mobx";
 
-const accessStateRegister = () => {
-  var authParameters = {
-    method: 'GET',
+var accessStateRegister = observable({
 
-    headers: {
-      "Content-type": "application/json",
-    },
+  token: null,
+
+  isLoggedIn: false,
 
 
-    body: {
-        email: "davidfc@vt.edu",
-        password: "HelloWorld123!"
-    },
-  }
-
-  const postData = {
-    email: "davidfc@vt.edu",
-    password: "HelloWorld123!"
-  }
-
-  try {
-    axios.post("http://localhost:5000/api/users/login", postData, {
+  login: () => {
+    axios.post("http://localhost:5000/api/users/login", {
+      email: "davidfc@vt.edu",
+      password: "HelloWorld123!"
+    }, {
       headers: {"Content-type": "application/json"}
     }).then(resp => {
       console.log(resp)
+      accessStateRegister.isLoggedIn = true;
+      accessStateRegister.token = resp.data.accessToken;
+      console.log(accessStateRegister.token);
     })
-  } catch (error) {
-    console.log("Error!", error)
   }
-}
+});
 
 export default accessStateRegister
