@@ -36,9 +36,6 @@ export default function Settings({onLogOut}) {
  // Parse the JSON string back into an object
   var storedUserObject = JSON.parse(storedJsonString);
 
-  // Display the access token in the console
-  console.log("Access Token:", storedUserObject.token);
-
   
   const handleLogout = () => {
 

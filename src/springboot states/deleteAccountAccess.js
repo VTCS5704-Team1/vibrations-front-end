@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 
-export default function ChangePassword() {
+export default function DeleteAccount() {
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');

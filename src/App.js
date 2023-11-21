@@ -21,9 +21,6 @@ function App() {
     
   };
 
-  const handleSignUp = () => {
-    setIsLoggedIn(true);
-  }
 
   const handleLogOut = () => {
     setIsLoggedIn(false);
@@ -36,14 +33,15 @@ function App() {
             <>
             <Routes>
               <Route path="/" element={<OpeningScreen />} />
-              <Route path="/SignUp" element={<SignUp onSignUp ={handleSignUp}/>} />
+              <Route path="/SignUp" element={<SignUp/>} />
               <Route path="/LogIn" element={<LogIn onLogin={handleLogin} />} />
+              <Route path="/CreateProfile" element={<CreateProfile />} />
             </Routes>
             </>
           ) : (
               <>
               <Routes>
-              <Route path="/CreateProfile" element={<CreateProfile />} />
+              
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings onLogOut ={handleLogOut} />} />

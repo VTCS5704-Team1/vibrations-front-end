@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
+import LogInAccess from '../springboot states/loginAccess';
 
-export default function SignUp({onSignUp}) {
+export default function SignUp() {
 
   const [formData, setFormData] = useState({
     email: '',
@@ -25,8 +26,14 @@ export default function SignUp({onSignUp}) {
   const handleSubmit = (e) => {
     
     e.preventDefault();
-    const email = formData.email;
 
+    handleSignUp();
+
+    // I just need to rearrange it so they have to log in after create profile 
+    navigate("/CreateProfile");
+  };
+
+  const handleSignUp = () => {
     try {
       axios.post("http://localhost:5000/api/users/register", {
         email: formData.email,
@@ -37,18 +44,8 @@ export default function SignUp({onSignUp}) {
       }, {
         headers: {"Content-type": "application/json"}
       }).then(r => {
-        console.log(r.data);
-        localStorage.setItem("user", JSON.stringify({email, token: r.data.accessToken}))
-
-              // Retrieve the JSON string from local storage
-        var storedJsonString = localStorage.getItem('user');
-
-            // Parse the JSON string back into an object
-        var storedUserObject = JSON.parse(storedJsonString);
-
-            // Display the access token in the console
-        console.log("Access Token:", storedUserObject.token);
-      }) .catch(error => {
+        console.log(r);
+      }).catch(error => {
         console.error("Error during sign up:", error);
         window.alert("didnt work stupid");
       });
@@ -56,10 +53,7 @@ export default function SignUp({onSignUp}) {
     catch (error) {
       // idk I'll do something here 
     }
-
-    onSignUp();
-    navigate("/CreateProfile");
-  };
+  }
   
 
 

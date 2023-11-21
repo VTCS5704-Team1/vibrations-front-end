@@ -9,7 +9,6 @@ function LoginPage({ onLogin }) {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-
     const navigate = useNavigate();
 
     const handleUserLogin = () => {
@@ -37,7 +36,18 @@ function LoginPage({ onLogin }) {
       console.log("logging in");
       console.log(email);
       console.log(password); 
-      <LogInAccess email={email} password={password} onLogin={onLogin}/>;
+      LogInAccess({ email, password}) 
+
+      var storedJsonString = localStorage.getItem('user');
+
+            // Parse the JSON string back into an object
+      var storedUserObject = JSON.parse(storedJsonString);
+
+      if (storedUserObject.token != null) {
+          onLogin();
+          navigate("/home");
+      }
+
     }
     
    

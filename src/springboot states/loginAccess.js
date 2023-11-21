@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function LogInAccess({email, password, onLogin}) {
+export default function LogInAccess({email, password}) {
+        console.log(email);
+        console.log(password);
 
-    const navigate = useNavigate();
-    try {
         axios.post("http://localhost:5000/api/users/login", {
         email: email,
         password: password
@@ -22,14 +22,10 @@ export default function LogInAccess({email, password, onLogin}) {
 
             // Display the access token in the console
         console.log("Access Token:", storedUserObject.token);
-        onLogin();
-        navigate("/home");
       }) .catch(error => {
         console.error("Error during login:", error);
         window.alert("Wrong email or password");
       });
-      } catch (error) {
-        window.alert("Wrong email or password")
-      }
+      
 
     }
