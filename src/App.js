@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
 import Profile from "./pages/profile"
 import Settings from "./pages/settings";
 import Matches from "./pages/matches";
@@ -9,6 +8,7 @@ import LogIn from "./pages/LogIn";
 import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import CreateProfile from "./pages/CreateProfile";
+import GpsComponent from "./pages/components/GpsComponent";
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
 
   return (
   <div className="main">
-    <div>
+    {isLoggedIn ? <GpsComponent /> : null}    <div>
       {!isLoggedIn ? (
             <>
             <Routes>
