@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const CLIENT_ID = "216ab5f16d6344838e5ff26a33888a6c";
 const CLIENT_SECRET = "7877da4703f2435b9635abfee3a917b6";
+
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/CreateProfile";
 
@@ -80,12 +81,15 @@ const SpotifyLogin = () => {
     };
   
     return (
-      <div>
-        <p>To access your Spotify data, log in to Spotify:</p>
+      
+        <div>
+        
+        <p style={{ fontSize: '16px' }}>To access your Spotify data, log in to Spotify:</p>
         <button onClick={handleLogin}>Spotify Login</button>
-  
+        <div className='small-gray-container'>
         {showTopData && (
           <>
+          <div className='small-vertical'>
             <h3>Top Artists</h3>
             {topArtist.map((artist) => (
               <div className="form-check" key={artist.id}>
@@ -103,7 +107,8 @@ const SpotifyLogin = () => {
                 </label>
               </div>
             ))}
-  
+
+           
             <h3>Top Songs</h3>
             {topSong.map((song) => (
               <div className="form-check" key={song.id}>
@@ -121,8 +126,10 @@ const SpotifyLogin = () => {
                 </label>
               </div>
             ))}
+            </div>
           </>
         )}
+      </div>
       </div>
     );
   };

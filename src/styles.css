@@ -32,6 +32,17 @@ body {
     align-items: center;
 } 
 
+.small-gray-container {
+    display: flex;
+    background-color: #f4f4f4;
+}
+
+.small-vertical {
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
+}
+
 .small-vertical-container {
     display: flex;
     flex-direction: column;
