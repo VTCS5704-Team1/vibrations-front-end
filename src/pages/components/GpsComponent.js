@@ -38,7 +38,6 @@ const GPSComponent = () => {
         <div>
             <h1>GPS Tracker</h1>
             <p>Your location: {location.latitude}, {location.longitude}</p>
-          <button onClick={() => fetchMatches(location)}>Generate Matches</button>
             <ul>
                 {matches.map((match) => (
                     <li key={match.id}>
