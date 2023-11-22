@@ -23,7 +23,7 @@ const GPSTracker = () => {
 
     const fetchMatches = (userLocation) => {
         // Implement API call to fetch matches within a 50 km radius
-        // Replace 'YOUR_API_URL' with your actual API URL
+        // Replace 'YOUR_API_URL'
         fetch(`YOUR_API_URL?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&radius=50`)
             .then((response) => response.json())
             .then((data) => {
