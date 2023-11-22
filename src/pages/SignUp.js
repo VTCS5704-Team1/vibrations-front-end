@@ -1,28 +1,59 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
-import accessStateRegister from '../springboot states/registerAccess';
+import axios from 'axios';
+import LogInAccess from '../springboot states/loginAccess';
 
-export default function SignUp({onSignUp}) {
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
+export default function SignUp() {
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    birthdate: '',
+    gender: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
 
-    accessStateRegister()
+    handleSignUp();
 
-    // You can handle the form data submission here.
-    // For this example, we'll just display the input values.
-    console.log('Name:', name);
-    console.log('Phone Number:', phoneNumber);
-    console.log('Email:', email);
-    onSignUp();
+    // I just need to rearrange it so they have to log in after create profile 
     navigate("/CreateProfile");
   };
+
+  const handleSignUp = () => {
+    try {
+      axios.post("http://localhost:5000/api/users/register", {
+        email: formData.email,
+        password: formData.password,
+        birthdate: formData.birthdate,
+        gender: formData.gender
+
+      }, {
+        headers: {"Content-type": "application/json"}
+      }).then(r => {
+        console.log(r);
+      }).catch(error => {
+        console.error("Error during sign up:", error);
+        window.alert("didnt work stupid");
+      });
+    }
+    catch (error) {
+      // idk I'll do something here 
+    }
+  }
   
 
 
@@ -31,32 +62,56 @@ export default function SignUp({onSignUp}) {
       <img src={logo} alt='logo' className="img"/>
       <h2>Sign Up for Vibrations</h2>
       <form onSubmit={handleSubmit}>
-      <div className='input-box'>
-        <label>Name:</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className='input-box'>
-        <label>Phone Number:</label>
-        <input
-          type="tel"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-      </div>
-      <div className='input-box'>
+      <div>
         <label>Email:</label>
         <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
       </div>
-      <button type="submit" className='button'>Create Account</button>
+      <div>
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Birthdate:</label>
+        <input
+          type="text"
+          name="birthdate"
+          pattern="\d{4}-\d{2}-\d{2}"
+          placeholder="yyyy-mm-dd"
+          value={formData.birthdate}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label>Gender:</label>
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Sign Up</button>
+      </div>
     </form>
-  </div>
-);
+    </div>
+  );
 }

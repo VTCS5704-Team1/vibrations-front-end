@@ -8,28 +8,22 @@ import LogIn from "./pages/LogIn";
 import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import CreateProfile from "./pages/CreateProfile";
+import EditProfile from "./pages/EditProfile";
 import GpsComponent from "./pages/components/GpsComponent";
-
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Handle login logic, set isLoggedIn to true
     setIsLoggedIn(true);
-    navigate("/home");
     
   };
 
-  const handleSignUp = () => {
-    setIsLoggedIn(true);
-  }
 
   const handleLogOut = () => {
     setIsLoggedIn(false);
-    navigate("/");
   }
 
   return (
@@ -42,14 +36,16 @@ function App() {
             <>
             <Routes>
               <Route path="/" element={<OpeningScreen />} />
-              <Route path="/SignUp" element={<SignUp onSignUp ={handleSignUp}/>} />
+              <Route path="/SignUp" element={<SignUp/>} />
               <Route path="/LogIn" element={<LogIn onLogin={handleLogin} />} />
+              <Route path="/CreateProfile" element={<CreateProfile />} />
+              <Route path="/EditProfile" element={<EditProfile/>} />
             </Routes>
             </>
           ) : (
               <>
               <Routes>
-              <Route path="/CreateProfile" element={<CreateProfile />} />
+              
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings onLogOut ={handleLogOut} />} />

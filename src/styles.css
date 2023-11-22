@@ -26,12 +26,22 @@ body {
     margin-left: 100px;
     margin-right: 100px;
     margin-bottom: 0;
-    height: 531px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     overflow: hidden;
     align-items: center;
 } 
+
+.small-gray-container {
+    display: flex;
+    background-color: #f4f4f4;
+}
+
+.small-vertical {
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
+}
 
 .small-vertical-container {
     display: flex;
@@ -77,6 +87,11 @@ body {
 .input-box {
     margin-bottom: 10px;
 }
+
+.input-box > .errorLabel {
+    color: red;
+    font-size: 12px;
+  }
 
 /* CSS */
 .button {

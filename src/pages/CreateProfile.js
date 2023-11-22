@@ -2,20 +2,18 @@ import React from "react";
 import Navbar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import Editer from "./components/Editer";
+import axios from "axios";
 
-
-export default function CreateProfile({onCreate}) {
+export default function CreateProfile() {
     const navigate = useNavigate();
 
     const handleSave = () => {
-        onCreate();
-        navigate('/profile');
+        navigate('/LogIn');
     }
 
 
     return (
         <div>
-            <Navbar />
             <div className="vertical-container">
                 <h1>Create Your Profile</h1>
                 <Editer/>
