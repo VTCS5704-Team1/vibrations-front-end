@@ -1,31 +1,55 @@
 import React, { useState, useEffect } from 'react';
 
-const GpsComponent = () => {
-    const [location, setLocation] = useState({ latitude: null, longitude: null });
+const GPSComponent = () => {
+    const [location, setLocation] = useState({
+        latitude: null,
+        longitude: null,
+    });
+    const [matches, setMatches] = useState([]);
 
     useEffect(() => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setLocation({ latitude, longitude });
-                },
-                (error) => {
-                    console.error('Error fetching geolocation:', error);
-                }
-            );
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords;
+                setLocation({ latitude, longitude });
+                fetchMatches({ latitude, longitude });
+            }, (error) => {
+                console.error('Error fetching location:', error);
+            });
         } else {
-            console.error('Geolocation not supported');
+            console.error('Geolocation API not supported');
         }
     }, []);
 
+    const fetchMatches = (userLocation) => {
+        // Implement API call to fetch matches within a 50 km radius
+        // Replace 'YOUR_API_URL' with your actual API URL
+        fetch(`___?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&radius=50`)
+            .then((response) => response.json())
+            .then((data) => {
+                setMatches(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching matches:', error);
+            });
+    };
+
     return (
         <div>
-            <h2>GPS Location</h2>
-            <p>Latitude: {location.latitude}</p>
-            <p>Longitude: {location.longitude}</p>
+            <h1>GPS Tracker</h1>
+            <p>Your location: {location.latitude}, {location.longitude}</p>
+          <button onClick={() => fetchMatches(location)}>Generate Matches</button>
+            <ul>
+                {matches.map((match) => (
+                    <li key={match.id}>
+                        <h3>{match.name}</h3>
+                        <p>{match.description}</p>
+                        <p>Distance: {match.distance} km</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
 
-export default GpsComponent;
+export default GPSComponent;

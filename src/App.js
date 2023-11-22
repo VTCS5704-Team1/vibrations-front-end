@@ -16,6 +16,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+
   const handleLogin = () => {
     // Handle login logic, set isLoggedIn to true
     setIsLoggedIn(true);
@@ -34,7 +35,8 @@ function App() {
 
   return (
   <div className="main">
-    {isLoggedIn ? <GpsComponent /> : null}    <div>
+    {isLoggedIn ? <GpsComponent /> : null}
+    <div>
       {!isLoggedIn ? (
             <>
             <Routes>
