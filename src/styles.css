@@ -71,7 +71,6 @@ body {
     width: 500px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    overflow: hidden;
     align-items: center;
 }
 
@@ -153,7 +152,7 @@ body {
     font-size: 1rem;
     padding-bottom: 1rem;
     width: 50%;
-    height: 30%;
+
     position: relative;
     display: inline-block;
     height: auto;
