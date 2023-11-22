@@ -9,6 +9,7 @@ import LogIn from "./pages/LogIn";
 import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import CreateProfile from "./pages/CreateProfile";
+import EditProfile from "./pages/EditProfile";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route path="/SignUp" element={<SignUp/>} />
               <Route path="/LogIn" element={<LogIn onLogin={handleLogin} />} />
               <Route path="/CreateProfile" element={<CreateProfile />} />
+              <Route path="/EditProfile" element={<EditProfile/>} />
             </Routes>
             </>
           ) : (

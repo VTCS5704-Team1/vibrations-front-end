@@ -3,6 +3,7 @@ import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ChangePassword from '../springboot states/changePasswordAccess';
+import DeleteAccount from '../springboot states/deleteAccountAccess';
 
 
 export default function Settings({onLogOut}) {
@@ -45,6 +46,7 @@ export default function Settings({onLogOut}) {
             "Authorization": "Bearer " + storedUserObject.token
         }
     }).then(resp => console.log(resp));
+    localStorage.clear();
     onLogOut();
     navigate('/');
   };
@@ -58,14 +60,8 @@ export default function Settings({onLogOut}) {
         <h1> Account Settings </h1>
         <div className='center-vertical-container'>
 
-          <ChangePassword token={storedUserObject.token}/>
-        <h3>Change GPS Location/Limits</h3>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <p> this will use the gps API</p>
-          <button onClick={handleLocationChange}>Change Location/Limits</button>
-        </form>
-        <h3>Delete Account</h3>
-        <button onClick={handleDeleteAccount}>Delete Account</button>
+        <ChangePassword token={storedUserObject.token}/>
+        <DeleteAccount onLogOut={onLogOut}/>
       </div>
         <button onClick={handleLogout} className='button' type="button">Logout</button>
       </ div>

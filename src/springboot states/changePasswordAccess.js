@@ -11,8 +11,8 @@ export default function ChangePassword() {
 
     var storedJsonString = localStorage.getItem('user');
 
- // Parse the JSON string back into an object
-  var storedUserObject = JSON.parse(storedJsonString);
+    // Parse the JSON string back into an object
+    var storedUserObject = JSON.parse(storedJsonString);
 
 
     const handleChangePassword = () => {

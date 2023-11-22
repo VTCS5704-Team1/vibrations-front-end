@@ -1,100 +1,82 @@
-import axios from "axios";
-import { useState } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+const DeleteAccount = ({onLogOut}) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-export default function DeleteAccount() {
-
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
-    const [email, setEmail] = useState('');
-
-    var storedJsonString = localStorage.getItem('user');
+  var storedJsonString = localStorage.getItem('user');
 
  // Parse the JSON string back into an object
   var storedUserObject = JSON.parse(storedJsonString);
 
+  const handleDeleteAccount = async () => {
+    try {
+        
+      setIsDeleting(true);
 
-    const handleChangePassword = () => {
-        console.log("email", email);
-        console.log("current password", currentPassword);
-        console.log("new password", newPassword);
+      // Make an HTTP request to your server or API endpoint for account deletion
+      axios({
+        method: "post",
+        url: "http://localhost:5000/api/users/delete",
+        headers: {
+          'Authorization': 'Bearer ' + storedUserObject.token,
+          "Content-type": "application/json"
+        },
+        data: {
+          "email": email,
+          "password": password,
+        },
+      }).then(response => {
+        console.log(response)
+      })
 
+        // Account deletion successful, you might want to redirect the user or show a success message
+        console.log('Account deleted successfully');
 
-        try {
-            if (newPassword !== confirmNewPassword) {
-                window.alert('New passwords do not match.');
-                return;
-            }
-            axios({
-              method: "post",
-              url: "http://localhost:5000/api/users/change/password",
-              headers: {
-                'Authorization': 'Bearer ' + storedUserObject.token,
-                "Content-type": "application/json"
-              },
-              data: {
-                "email": email,
-                "oldPassword": currentPassword,
-                "newPassword": newPassword
-              },
-            })
+    } catch (error) {
+      // Handle any network or unexpected errors
+      console.error('Error deleting account', error);
+    } finally {
+      setIsDeleting(false);
+      localStorage.clear();
+      onLogOut();
+      navigate("/");
+    }
+  };
 
-            .then(resp => console.log(resp))
-            .catch(error => {
-                console.log(error);
-                window.alert('Error in changing your password');
-            });
-            
-        } 
-        catch (error) {
-            console.log(error);
-            window.alert('Error in changing your password');
-        }
-      };
-
-      return (
-        <div className='vertically-aligned'>
-        <h3>Change Password</h3>
-        <form onSubmit={(e) => e.preventDefault()}>
-        <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Current Password:
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            New Password:
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Confirm Password:
-            <input
-              type="password"
-              value={confirmNewPassword}
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <button onClick={handleChangePassword}>Change Password</button>
-        </form>
+  return (
+    <div>
+      <h3>Delete Account</h3>
+      <p>Enter your email and password to confirm deletion:</p>
+      <form>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-      );
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="button" onClick={handleDeleteAccount} disabled={isDeleting}>
+          {isDeleting ? 'Deleting...' : 'Delete Account'}
+        </button>
+      </form>
+    </div>
+  );
+};
 
-}
+export default DeleteAccount;

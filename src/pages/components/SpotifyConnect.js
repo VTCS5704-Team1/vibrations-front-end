@@ -16,6 +16,12 @@ function SpotifyConnect() {
     const [artists, setArtists] = useState([]);
     const [songs, setSongs] = useState([]);
 
+
+    // if the list to move items to has less than 5 items, then add this item
+
+    const [selected, setSelected] = useState([]);
+    
+
     useEffect(() => {
         // API access Token
         var authParameters = {
@@ -31,6 +37,13 @@ function SpotifyConnect() {
             .then(data => setAccessToken(data.access_token))
 
     }, [])
+
+
+    const handleCheckboxClick = (clickedArtist) => {
+        // Your logic for handling checkbox click
+        console.log(`Checkbox clicked for artist: ${clickedArtist.name}`);
+        // Add your logic to update the state or perform any other actions
+      };
 
 
     // search for artist
@@ -91,7 +104,12 @@ function SpotifyConnect() {
             {artists.map((artist, i) => {
                 return ( 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        <input 
+                            class="form-check-input"
+                            type="checkbox" 
+                            value="" 
+                            id="flexCheckDefault"
+                            onClick={() => handleCheckboxClick(artist)}/>
                         <label class="form-check-label" for="flexCheckDefault">
                             {artist.name}
                         </label>
