@@ -8,14 +8,12 @@ import LogIn from "./pages/LogIn";
 import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import CreateProfile from "./pages/CreateProfile";
-import GpsComponent from "./pages/components/GpsComponent";
 
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
 
   const handleLogin = () => {
     // Handle login logic, set isLoggedIn to true
@@ -35,7 +33,6 @@ function App() {
 
   return (
   <div className="main">
-    {isLoggedIn ? <GpsComponent /> : null}
     <div>
       {!isLoggedIn ? (
             <>
