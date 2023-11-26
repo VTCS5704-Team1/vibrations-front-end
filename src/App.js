@@ -9,7 +9,6 @@ import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import CreateProfile from "./pages/CreateProfile";
 import EditProfile from "./pages/EditProfile";
-import GpsComponent from "./pages/components/GpsComponent";
 
 function App() {
 
@@ -28,9 +27,7 @@ function App() {
 
   return (
   <div className="main">
-    <div>
-      {isLoggedIn ? <GpsComponent /> : null}
-    </div>
+
     <div>
       {!isLoggedIn ? (
             <>
