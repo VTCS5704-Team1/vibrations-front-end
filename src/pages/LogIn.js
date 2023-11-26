@@ -50,8 +50,6 @@ function LoginPage({ onLogin }) {
           navigate("/home");
       }
 
-      console.log(storedUserObject.token);
-
     }
     
     return (

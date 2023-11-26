@@ -2,8 +2,12 @@ import Navbar from '../Navbar';
 import './Home.css'
 import { FaHeart, FaStar } from 'react-icons/fa';
 import {useState} from "react";
+import { useUserData } from './components/User';
 
 const Homepage = ({onSelect}) => {
+
+    const { userData, updateUserData } = useUserData();
+    
     const [matchedProfiles, setMatchedProfiles] = useState([
         {
             name: 'Sarah',
@@ -23,15 +27,13 @@ const Homepage = ({onSelect}) => {
         },
     ]);
 
-    const[favorites, setFavorites] = useState([]);
 
     const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
 
     // Handle liking a profile
     const handleLikeProfile = () => {
         // Update the matched profiles and current profile index
-        favorites.push(matchedProfiles[currentProfileIndex]);
-        console.log(favorites);
+        userData.likedUsers.push(matchedProfiles[currentProfileIndex]);
     };
 
     // Handle switching between profiles
@@ -55,7 +57,7 @@ const Homepage = ({onSelect}) => {
         <div>
             <Navbar />
             <div className='vertical-container'>
-                <h1> not sure what we want to call this page </h1>
+                <h1>Listeners In Your Area</h1>
 
                 {onSelect ? (
                     <div> 
@@ -86,7 +88,7 @@ const Homepage = ({onSelect}) => {
                 </div>
                 </div>
                 ) : ( 
-                    <h1> Please create your profile</h1>
+                    <p> Please create your profile by clicking "Create Profile" in the profile tab</p>
                 )}
             </div>
         </div>

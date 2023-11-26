@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar';
-import './matches.css'
+import './matches.css';
+import { useUserData } from './components/User';
 
 
-const MessengerWindow = () => {
-    const [matches, setMatches] = useState([
-        { name: 'Sarah', profileImageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg' },
-        { name: 'Tim', profileImageUrl: 'https://i.pinimg.com/236x/03/c0/ca/03c0cad4b7411bab862fa1a69decf6b5.jpg' },
-    ]);
+const MessengerWindow = ({onSelect}) => {
+
+    const { userData, updateUserData } = useUserData();
+    const matches = userData.likedUsers; 
+
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [messageInput, setMessageInput] = useState('');
     const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(false);
@@ -34,14 +35,13 @@ const MessengerWindow = () => {
 
         <><div>
             <Navbar />
-        </div><div className="vertical-container">
-                <header className="messenger-header">
-                    <h1>Matched!</h1>
-                    <h2> Id prefer if we put this in a grid format </h2>
-
-
-                </header>
-                <div className="messenger-body">
+        </div>
+        <div className="vertical-container">
+            <header className="messenger-header">
+            <h1>Matched!</h1>
+            <h2> Id prefer if we put this in a grid format </h2>
+            </header>
+            {onSelect ? (<div className="messenger-body">
                     <ul className="matches">
                         {matches.map((match) => (
                             <li key={match.name}>
@@ -70,7 +70,12 @@ const MessengerWindow = () => {
                             )}
                         </div>
                     )}
-                </div>
+                </div>) : (
+                    <div>
+                        <p>Please create your profile by clicking "Create Profile" in the profile tab</p>
+                    </div>
+                )}
+                
             </div></>
 
     );

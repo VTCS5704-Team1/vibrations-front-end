@@ -5,38 +5,53 @@ import ProfilePicUpload from "./components/ProfilePicUpload";
 import { InputGroup, FormControl } from 'react-bootstrap';
 import React, {useState } from 'react';
 import SpotifyConnect from './components/SpotifyConnect';
+import { useUserData } from './components/User';
+import axios from "axios";
 
-export default function EditProfile({onCreation}) {
+export default function EditProfile({onCreation, gender, firstName, lastName, email}) {
     const navigate = useNavigate();
+    const { userData, updateUserData } = useUserData();
 
-    const [searchArtistInput, setSearchArtistInput ] = useState("");
-    const [searchSongInput, setSearchSongInput ] = useState("");
-    const [topArtists, setTopArtists] = useState([]);
-    const [topSongs, setTopSongs] = useState([]);
     const [bio, setBio] =  useState("");
-    const [gender, setGender] = useState("");
+    const [selectedSongs, setSelectedSongs] = useState([]);
     const [selectedArtists, setSelectedArtists] =  useState([]);
+    const [pfp, setPfp] = useState("");
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setPfp(file);
+    };
+
+    const body = {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        bio: bio,
+        gender: userData.gender,
+        topArtists: selectedArtists,
+        topSongs: selectedSongs,
+    }
 
     const handleSave = async () => {
-        // try {
-        //     // Assuming profileData is an object with the necessary properties
-        //     const response = await axios.post('http://localhost:5000/registerUser', {
-        //       firstName: firstName,
-        //       email: profileData.email,
-        //       bio: bio,
-        //       gender: profileData.gender,
-        //       pfp: profileData.pfp, // Assuming pfp is a file
-        //       topArtists: topArtists,
-        //       topSongs: topSongs,
-        //     });
+
+        try {
+            // Assuming profileData is an object with the necessary properties
+
+
+            const response = await axios.post('http://localhost:5000/registerUser', {
+                body,
+                pfp: pfp
+            }, {
+                headers: { 'Content-type': 'form-data' },
+              });
         
-        //     console.log(response.data); // Handle the response from the server as needed
-        //     // If successful, you might want to navigate to the profile page or perform other actions
-        //     navigate('/profile');
-        //   } catch (error) {
-        //     console.error('Error saving profile:', error);
-        //     // Handle error, show a message, etc.
-        //   }
+            console.log(response.data); // Handle the response from the server as needed
+            // If successful, you might want to navigate to the profile page or perform other actions
+            navigate('/profile');
+          } catch (error) {
+            console.error('Error saving profile:', error);
+            // Handle error, show a message, etc.
+          }
         onCreation();
         navigate('/profile');
     }
@@ -49,8 +64,10 @@ export default function EditProfile({onCreation}) {
                 <h1>Edit Profile</h1>
                 <div className="container">
                 <div className="profile" style={{width: '65vh'}}>
-                    <ProfilePicUpload/>
-                    <h3>Their name will go here</h3>
+                <h3>Upload Profile Picture </h3>
+                <input type="file" onChange={handleFileChange} />
+                
+                    <h3>{userData.firstName}</h3>
                     <p> Add a bio that says a little about you </p>
                     <InputGroup classname="mb-3" size="lg">
                     <FormControl className="bio" style= {{width: '200px'}} as="textarea" rows ={8}
@@ -68,23 +85,12 @@ export default function EditProfile({onCreation}) {
 
                 </InputGroup>
                 <div>
-                <label>Gender:</label>
-                <select
-                    name="gender"
-                    value={gender}
-                    onChange={event => setGender(event.target.value)}
-                    required
-                >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-                </select>
+                
             </div>
 
             </div>
                 <div className="favorite-music">
-                     <SpotifyConnect setSelectedArtists={{setSelectedArtists}}/>
+                <SpotifyConnect setSelectedArtists={setSelectedArtists} selectedArtists={selectedArtists} setSelectedSongs={setSelectedSongs} selectedSongs={selectedSongs}/>
                 </div>
 
 

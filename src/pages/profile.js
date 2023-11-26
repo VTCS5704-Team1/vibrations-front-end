@@ -5,20 +5,43 @@ import Navbar from '../Navbar';
 import { Button } from 'react-bootstrap';
 import EditProfile from './EditProfile';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useUserData } from './components/User';
 
-export default function Profile() {
-    const [profileIsCreated, setProfileIsCreated] = useState(false);
+export default function Profile({onSelect}) {
+
+  const { userData, updateUserData } = useUserData();
+    const name = userData.firstName;
+    const [bio, setBio] = useState("");
+    const [songs, setSongs] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const [pfp, setPfp] = useState("");
+    
 
     // once their profile is created, then they can see all their profile data
 
-    const profileData = {
-        name: 'Sarah',
-        bio: 'My name is Sarah and I love listening to music in my free time and while Im studying!',
-        favoriteSong: 'Blank Space - Taylor Swift',
-        favoriteArtist: 'Lady Gaga',
-        favoriteGenre: 'Pop',
-        profilePicture: 'https://st.depositphotos.com/1000686/3738/i/450/depositphotos_37383675-stock-photo-portrait-of-a-young-beautiful.jpg',
-      };
+
+    // this will be the getter 
+    async function getUserData() {
+      try {
+        const response = await axios.get("http://localhost:5000/api/users/getUser", 
+        {
+          email: userData.email
+        })
+        .then(response => {
+          console.log(response);
+          setBio(response.data.bio);
+          setSongs(response.data.topSongs);
+          setArtists(response.data.topArtists);
+
+          setPfp(response.data.pfp);
+        })
+        
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
 
       const navigate = useNavigate();
 
@@ -28,22 +51,31 @@ export default function Profile() {
     
       return (
         <div >
+
           <Navbar />
           <div className='vertical-container'>
-            <h1> {profileData.name}'s Profile </h1>
-          <div className="container">
+            <h1> {name}'s Profile </h1>
+            {onSelect ? (
+              <div>
+            <div className="container">
           <div className="profile">
-            <img src={profileData.profilePicture} alt="Profile" className="profile-picture" />
-            <h2>{profileData.name}</h2>
-            <p>{profileData.bio}</p>
+            <img src={pfp} alt="Profile" className="profile-picture" />
+            <h2>{name}</h2>
+            <p>{bio}</p>
           </div>
           <div className="favorite-music">
-            <p><strong>Favorite Song:</strong> {profileData.favoriteSong}</p>
-            <p><strong>Favorite Artist:</strong> {profileData.favoriteArtist}</p>
-            <p><strong>Favorite Genre:</strong> {profileData.favoriteGenre}</p>
+            <p><strong>Favorite Song:</strong> {songs}</p>
+            <p><strong>Favorite Artist:</strong> {artists}</p>
           </div>
           </div>
           <button className="button" onClick={handleClick}>Edit Profile</button>
+          </div> ) : (
+            <div>
+            <p> Please create your profile</p>
+            <button className="button" onClick={handleClick}>Create Profile</button>
+            </div>
+          )}
+          
         </div>
         </div>
       );

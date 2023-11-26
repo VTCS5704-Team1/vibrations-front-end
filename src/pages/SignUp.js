@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
 import LogInAccess from '../springboot states/loginAccess';
+import { useUserData } from './components/User';
 
 export default function SignUp({ onLogin }) {
+
+  const { userData, updateUserData } = useUserData();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,7 +40,7 @@ export default function SignUp({ onLogin }) {
           lastName: formData.lastName,
           birthdate: formData.birthdate,
           gender: formData.gender,
-          phoneNumber: formData.phoneNumber,
+          phoneNumber: "+1" + formData.phoneNumber,
         },
         {
           headers: { 'Content-type': 'application/json' },
@@ -47,6 +51,7 @@ export default function SignUp({ onLogin }) {
         const email = formData.email;
         const password = formData.password;
 
+        
         // Log in the user after successful sign-up
         LogInAccess({ email, password });
 
@@ -75,6 +80,11 @@ export default function SignUp({ onLogin }) {
     try {
       await handleSignUp();
 
+      updateUserData({ firstName: formData.firstName, 
+       lastName: formData.lastName, 
+       email: formData.email,
+       gender: formData.gender, 
+       phoneNumber: formData.phoneNumber});
       // Redirect or perform other actions after successful sign-up
       navigate('/profile');
     } catch (error) {

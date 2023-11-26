@@ -1,6 +1,5 @@
 import React, {useEffect, useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import SpotifyLogin from "./SpotifyLogin";
 
 
 const CLIENT_ID = "216ab5f16d6344838e5ff26a33888a6c";
@@ -29,22 +28,19 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
 }
 
-const SpotifyConnect = ({setSelectedArtists}) => {
-
-    const[searchArtistInput, setSearchArtistInput] = useState("");
-    const[searchSongInput, setSearchSongInput] = useState("");
-    // Gets and sets the access token
-    const [accessToken, setAccessToken] = useState("");
-
-    const [artists, setArtists] = useState([]);
-    const [songs, setSongs] = useState([]);
-
-    const ARTISTS_ENDPOINT = 'https://api.spotify.com/v1/me/top/artists';
-    const SONGS_ENDPOINT = 'https://api.spotify.com/v1/me/top/tracks';
-  
-    const [topArtist, setTopArtist] = useState([]);
-    const [topSong, setTopSong] = useState([]);
-    const [showTopData, setShowTopData] = useState(false);
+const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, selectedSongs}) => {
+  const [searchArtistInput, setSearchArtistInput] = useState("");
+  const [searchSongInput, setSearchSongInput] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+  const [artists, setArtists] = useState([]);
+  const [songs, setSongs] = useState([]);
+  const ARTISTS_ENDPOINT = "https://api.spotify.com/v1/me/top/artists";
+  const SONGS_ENDPOINT = "https://api.spotify.com/v1/me/top/tracks";
+  const [topArtist, setTopArtist] = useState([]);
+  const [topSong, setTopSong] = useState([]);
+  const [showTopData, setShowTopData] = useState(false);
+  const [selectedArtistsCount, setSelectedArtistsCount] = useState(0);
+  const [selectedSongsCount, setSelectedSongsCount] = useState(0);
 
     useEffect(() => {
         if (window.location.hash) {
@@ -120,25 +116,72 @@ const SpotifyConnect = ({setSelectedArtists}) => {
     }, [])
 
 
-    const handleCheckboxClick = (clickedArtist) => {
-        // Your logic for handling checkbox click
-        console.log(`Checkbox clicked for artist: ${clickedArtist.name}`);
-        // Add your logic to update the state or perform any other actions
-        // const isArtistSelected = selectedArtists.some(
-        //     (artist) => artist.id === clickedArtist.id
-        //   );
-      
-        //   if (isArtistSelected) {
-        //     // If artist is selected, remove it from the selected list
-        //     const updatedSelectedArtists = selectedArtists.filter(
-        //       (artist) => artist.name !== clickedArtist.name
-        //     );
-        //     setSelectedArtists(updatedSelectedArtists);
-        //   } else {
-        //     // If artist is not selected, add it to the selected list
-        //     setSelectedArtists([...selectedArtists, clickedArtist]);
-        //   }
-        };
+    const handleCheckboxClickArtist = (clickedArtist) => {
+      if (!clickedArtist) {
+        return; // Add a check to handle null value
+      }
+    
+      console.log(selectedArtists);
+      const isArtistSelected = selectedArtists.some(
+        (artist) => artist.id === clickedArtist.id
+      );
+    
+      if (isArtistSelected) {
+        // If artist is selected, remove it from the selected list
+        const updatedSelectedArtists = selectedArtists.filter(
+          (artist) => artist.id !== clickedArtist.id
+        );
+        setSelectedArtists(updatedSelectedArtists);
+        setSelectedArtistsCount((count) => count - 1);
+      } else {
+        // If artist is not selected and count is less than 5, add it to the selected list
+        if (selectedArtistsCount < 5) {
+          const updatedSelectedArtists = [...selectedArtists, clickedArtist];
+          setSelectedArtists(updatedSelectedArtists);
+          setSelectedArtistsCount((count) => count + 1);
+        } else {
+          // Uncheck the checkbox
+          document.getElementById(`flexCheckDefault-${clickedArtist.id}`).checked = false;
+          // Handle the case when the user tries to select more than 5 artists
+          console.warn('You can select up to 5 artists.');
+          window.alert('You can select up to 5 artists.');
+          // You might want to show a user-friendly message or take other actions
+        }
+      }
+    };
+
+    const handleCheckboxClickSong = (clickedSong) => {
+      if (!clickedSong) {
+        return; // Add a check to handle null value
+      }
+    
+      console.log(selectedSongs);
+      const isSongSelected = selectedSongs.some(
+        (song) => song.id === clickedSong.id
+      );
+    
+      if (isSongSelected) {
+        // If artist is selected, remove it from the selected list
+        const updatedSelectedSongs = selectedSongs.filter(
+          (song) => song.id !== clickedSong.id
+        );
+        setSelectedSongs(updatedSelectedSongs);
+        setSelectedSongsCount((count) => count - 1);
+      } else {
+        // If artist is not selected and count is less than 5, add it to the selected list
+        if (selectedSongsCount < 5) {
+          const updatedSelectedSongs = [...selectedSongs, clickedSong];
+          setSelectedSongs(updatedSelectedSongs);
+          setSelectedSongsCount((count) => count + 1);
+        } else {
+          // Uncheck the checkbox
+          document.getElementById(`flexCheckDefault-${clickedSong.id}`).checked = false;
+
+          window.alert('You can select up to 5 songs.');
+          // You might want to show a user-friendly message or take other actions
+        }
+      }
+    };
 
 
     // search for artist
@@ -206,7 +249,7 @@ const SpotifyConnect = ({setSelectedArtists}) => {
                             type="checkbox" 
                             value="" 
                             id="flexCheckDefault"
-                            onClick={() => handleCheckboxClick(artist)}/>
+                            onClick={() => handleCheckboxClickArtist(artist)}/>
                         <label class="form-check-label" for="flexCheckDefault">
                             {artist.name}
                         </label>
@@ -234,7 +277,12 @@ const SpotifyConnect = ({setSelectedArtists}) => {
             {songs.map((song, i) => {
                 return ( 
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        value="" 
+                        onClick={() => handleCheckboxClickSong(song)}
+                        id="flexCheckDefault"/>
                         <label class="form-check-label" for="flexCheckDefault">
                             {song.name} - {song.artists[0].name}
                         </label>
@@ -271,6 +319,7 @@ const SpotifyConnect = ({setSelectedArtists}) => {
                   className="form-check-input"
                   type="checkbox"
                   value=""
+                  onClick={() => handleCheckboxClickArtist(artist)}
                   id={`flexCheckDefault-${artist.id}`}
                 />
                 <label
@@ -290,6 +339,7 @@ const SpotifyConnect = ({setSelectedArtists}) => {
                   className="form-check-input"
                   type="checkbox"
                   value=""
+                  onClick={() => handleCheckboxClickSong(song)}
                   id={`flexCheckDefault-${song.id}`}
                 />
                 <label
@@ -301,14 +351,28 @@ const SpotifyConnect = ({setSelectedArtists}) => {
               </div>
             ))}
             </div>
+            <div className="small-vertical">
+      <h3>Selected Artists</h3>
+      <ul>
+        {selectedArtists.map((artist) => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
+
+      <h3>Selected Songs</h3>
+      <ul>
+        {selectedSongs.map((song) => (
+          <li key={song.id}>{song.name}</li>
+        ))}
+      </ul>
+
+      </div>
           </>
+          
         )}
       </div>
       </div>
-
-            </div>
-            
-
+      </div>
             
     )
 }

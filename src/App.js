@@ -9,6 +9,7 @@ import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile";
 import GpsComponent from "./pages/components/GpsComponent";
+import { UserDataProvider } from "./pages/components/User";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
   return (
   <div className="main">
     <div>
+      <UserDataProvider>
       {!isLoggedIn ? (
             <>
             <Routes>
@@ -55,8 +57,11 @@ function App() {
               </>
 
           )}
+          </UserDataProvider>
     </div>
+    
   </div>
+  
   );
 }
 
