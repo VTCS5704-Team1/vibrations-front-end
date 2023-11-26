@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-
 
 const GPSTracker = () => {
     const [location, setLocation] = useState({
@@ -15,7 +12,7 @@ const GPSTracker = () => {
             navigator.geolocation.getCurrentPosition((position) => {
                 const { latitude, longitude } = position.coords;
                 setLocation({ latitude, longitude });
-                
+                fetchMatches({ latitude, longitude });
             }, (error) => {
                 console.error('Error fetching location:', error);
             });
@@ -24,8 +21,34 @@ const GPSTracker = () => {
         }
     }, []);
 
-  
-    return(location);
+    const fetchMatches = (userLocation) => {
+        // Implement API call to fetch matches within a 50 km radius
+        // Replace 'YOUR_API_URL'
+        fetch(`YOUR_API_URL?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&radius=50`)
+            .then((response) => response.json())
+            .then((data) => {
+                setMatches(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching matches:', error);
+            });
+    };
+
+    return (
+        <div>
+            <h1>GPS Tracker</h1>
+            <p>Your location: {location.latitude}, {location.longitude}</p>
+            <ul>
+                {matches.map((match) => (
+                    <li key={match.id}>
+                        <h3>{match.name}</h3>
+                        <p>{match.description}</p>
+                        <p>Distance: {match.distance} km</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default GPSTracker;
