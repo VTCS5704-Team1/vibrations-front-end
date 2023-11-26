@@ -3,7 +3,7 @@ import './Home.css'
 import { FaHeart, FaStar } from 'react-icons/fa';
 import {useState} from "react";
 
-const Homepage = () => {
+const Homepage = ({onSelect}) => {
     const [matchedProfiles, setMatchedProfiles] = useState([
         {
             name: 'Sarah',
@@ -56,6 +56,9 @@ const Homepage = () => {
             <Navbar />
             <div className='vertical-container'>
                 <h1> not sure what we want to call this page </h1>
+
+                {onSelect ? (
+                    <div> 
                 <div className='top-bar'>
                         <button onClick={handleLikeProfile} className='star-button'>
                             <FaStar style={{ fontSize: '2em' }} />
@@ -81,7 +84,10 @@ const Homepage = () => {
                         &gt;
                     </div> 
                 </div>
-                
+                </div>
+                ) : ( 
+                    <h1> Please create your profile</h1>
+                )}
             </div>
         </div>
     );

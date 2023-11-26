@@ -7,7 +7,7 @@ const CLIENT_ID = "216ab5f16d6344838e5ff26a33888a6c";
 const CLIENT_SECRET = "7877da4703f2435b9635abfee3a917b6";
 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/CreateProfile";
+const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/EditProfile";
 
 const SPACE_DELIMITER = "%20"
 // lists out what we want to pull from users
@@ -29,7 +29,7 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
 }
 
-function SpotifyConnect() {
+const SpotifyConnect = ({setSelectedArtists}) => {
 
     const[searchArtistInput, setSearchArtistInput] = useState("");
     const[searchSongInput, setSearchSongInput] = useState("");
@@ -38,9 +38,6 @@ function SpotifyConnect() {
 
     const [artists, setArtists] = useState([]);
     const [songs, setSongs] = useState([]);
-
-    // if the list to move items to has less than 5 items, then add this item
-    const [selectedArtists, setSelectedArtists] = useState([]);
 
     const ARTISTS_ENDPOINT = 'https://api.spotify.com/v1/me/top/artists';
     const SONGS_ENDPOINT = 'https://api.spotify.com/v1/me/top/tracks';
@@ -54,9 +51,19 @@ function SpotifyConnect() {
           const { access_token, expires_in } = getReturnedParamsFromSpotifyAuth(
             window.location.hash
           );
-    
+
+          var storedJsonString = localStorage.getItem('user');
+
+            // Parse the JSON string back into an object
+        var storedUserObject = JSON.parse(storedJsonString);
+
+        console.log(storedUserObject.token);
+  
+            
+        
           localStorage.setItem('accessToken', access_token);
           localStorage.setItem('expiresIn', expires_in);
+
     
           // Call the functions to fetch top artists and songs
           fetchTopData();
@@ -117,20 +124,20 @@ function SpotifyConnect() {
         // Your logic for handling checkbox click
         console.log(`Checkbox clicked for artist: ${clickedArtist.name}`);
         // Add your logic to update the state or perform any other actions
-        const isArtistSelected = selectedArtists.some(
-            (artist) => artist.id === clickedArtist.id
-          );
+        // const isArtistSelected = selectedArtists.some(
+        //     (artist) => artist.id === clickedArtist.id
+        //   );
       
-          if (isArtistSelected) {
-            // If artist is selected, remove it from the selected list
-            const updatedSelectedArtists = selectedArtists.filter(
-              (artist) => artist.name !== clickedArtist.name
-            );
-            setSelectedArtists(updatedSelectedArtists);
-          } else {
-            // If artist is not selected, add it to the selected list
-            setSelectedArtists([...selectedArtists, clickedArtist]);
-          }
+        //   if (isArtistSelected) {
+        //     // If artist is selected, remove it from the selected list
+        //     const updatedSelectedArtists = selectedArtists.filter(
+        //       (artist) => artist.name !== clickedArtist.name
+        //     );
+        //     setSelectedArtists(updatedSelectedArtists);
+        //   } else {
+        //     // If artist is not selected, add it to the selected list
+        //     setSelectedArtists([...selectedArtists, clickedArtist]);
+        //   }
         };
 
 
@@ -234,16 +241,70 @@ function SpotifyConnect() {
                     </div>
                 )
             })}
+
+            
             </div>
+            <div className="small-vertical">
+            {showTopData ? (
+              // Content to display when showTopData is true (i.e., data is available)
+            <div>
+              {/* Your existing content when showTopData is true */}
+            </div>
+            ) : (
+            // Button to display when showTopData is false (i.e., data is not available)
+            <div> 
+            <p> Log in to your spotify to view your top songs and artists </p>
+            <button className="button" onClick={handleLogin}>Spotify Login</button>
+            </div>
+            )}
 
-            <SpotifyLogin />
+            
+            
+            <div className='small-gray-container'>
+            {showTopData && (
+              <>
+              <div className='small-vertical'>
+              <h3>Top Artists</h3>
+            {topArtist.map((artist) => (
+              <div className="form-check" key={artist.id}>
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id={`flexCheckDefault-${artist.id}`}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`flexCheckDefault-${artist.id}`}
+                >
+                  {artist.name}
+                </label>
+              </div>
+             ))}
 
-            {/* <div className="container">
-                <h3>Selected Artists</h3>
-                {selectedArtists.map((artist) => (
-                    <div key={artist.id}>{artist.name}</div>
-                ))}
-            </div> */}
+           
+            <h3>Top Songs</h3>
+            {topSong.map((song) => (
+              <div className="form-check" key={song.id}>
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id={`flexCheckDefault-${song.id}`}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor={`flexCheckDefault-${song.id}`}
+                >
+                  {song.name} - {song.artists[0].name}
+                </label>
+              </div>
+            ))}
+            </div>
+          </>
+        )}
+      </div>
+      </div>
 
             </div>
             

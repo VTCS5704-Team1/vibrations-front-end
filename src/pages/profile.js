@@ -4,6 +4,7 @@ import './profile.css'
 import Navbar from '../Navbar';
 import { Button } from 'react-bootstrap';
 import EditProfile from './EditProfile';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
     const [profileIsCreated, setProfileIsCreated] = useState(false);
@@ -18,6 +19,12 @@ export default function Profile() {
         favoriteGenre: 'Pop',
         profilePicture: 'https://st.depositphotos.com/1000686/3738/i/450/depositphotos_37383675-stock-photo-portrait-of-a-young-beautiful.jpg',
       };
+
+      const navigate = useNavigate();
+
+      const handleClick = () => {
+        navigate("/EditProfile");
+      }
     
       return (
         <div >
@@ -36,7 +43,7 @@ export default function Profile() {
             <p><strong>Favorite Genre:</strong> {profileData.favoriteGenre}</p>
           </div>
           </div>
-          <EditProfile />
+          <button className="button" onClick={handleClick}>Edit Profile</button>
         </div>
         </div>
       );

@@ -43,11 +43,14 @@ function LoginPage({ onLogin }) {
             // Parse the JSON string back into an object
       var storedUserObject = JSON.parse(storedJsonString);
 
+      
       if (storedUserObject !== null && storedUserObject.token != null) {
           console.log(storedUserObject.token);
           onLogin();
           navigate("/home");
       }
+
+      console.log(storedUserObject.token);
 
     }
     
