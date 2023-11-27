@@ -12,6 +12,7 @@ function LoginPage({ onLogin }) {
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
     const {userData, updateUserData} = useUserData();
+    const [dataResponse, setDataResponse] = useState("");
 
     const handleUserLogin = () => {
 
@@ -41,20 +42,23 @@ function LoginPage({ onLogin }) {
       console.log("logging in");
       console.log(email);
       console.log(password); 
-      LogInAccess({ email, password}) 
+      LogInAccess({ email, password});
 
       var storedJsonString = localStorage.getItem('user');
 
             // Parse the JSON string back into an object
       var storedUserObject = JSON.parse(storedJsonString);
 
+
       // this means the log in was successful 
       if (storedUserObject !== null && storedUserObject.token != null) {
           updateUserData({email: email});
-          // check if a user exists in sql, if it does then use axios to get all the user data and save it
+          
+          
+          // exists in sql (profile is created)
+          
               // they acc shouldn't be able to login at all if they haven't created a profile 
           // if the user doesnt exist in sql
-          console.log(storedUserObject.token);
           onLogin();
           navigate("/home");
       }

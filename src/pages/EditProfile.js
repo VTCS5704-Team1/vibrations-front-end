@@ -21,7 +21,6 @@ export default function EditProfile({onCreation} ) {
     const [radius, setRadius] = useState(50.0); // State for radius
     const [pfp, setPfp] = useState(null);
 
-
     const handleChangeRadius = (event) => {
         setRadius(parseInt(event.target.value));
     };
@@ -37,6 +36,30 @@ export default function EditProfile({onCreation} ) {
         const file = event.target.files[0];
         setPfp(file);
     };
+
+    async function fileUpload() {
+
+        const formData = new FormData();
+        formData.append("pfp", pfp);
+        formData.append("email", userData.email);
+
+        formData.forEach((value, key) => {
+            console.log(key, value);
+          });
+        try {
+            const response = await axios({
+                method: "POST",
+                url: "http://localhost:5000/api/images/upload",
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": "Bearer " + storedUserObject.token,
+                  },
+            })
+        } catch (error) {
+            console.log("error uploading file", error);
+        }
+    }
 
     
 
@@ -87,6 +110,7 @@ export default function EditProfile({onCreation} ) {
                 <div className="profile" style={{width: '65vh'}}>
                 <h3>Upload Profile Picture </h3>
                 <input type="file" onChange={handleFileChange} />
+                <button className="button" onClick={fileUpload}> Upload </button>
                 
                     <h3>{userData.firstName}</h3>
                     <p> Add a bio that says a little about you </p>
