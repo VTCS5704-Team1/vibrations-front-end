@@ -9,10 +9,14 @@ export const UserDataProvider = ({ children }) => {
     firstName: '',
     lastName: '',
     gender: '',
-    phoneNumber: '',
-    latitude: '',
-    longitude:'',
-    likedUsers: []
+    phoneNumber: 0,
+    latitude: 0.0,
+    longitude:0.0,
+    bio: '',
+    maxDistance : 0.0,
+    likedUsers: [],
+    topArtists: [],
+    topSongs: []
   });
 
 

@@ -1,41 +1,151 @@
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import React, { useState } from 'react';
-import Editer from './components/Editer';
-import './EditProfile.css';
+import Navbar from "../Navbar";
+import { useNavigate } from "react-router-dom";
+import { InputGroup, FormControl } from 'react-bootstrap';
+import React, {useState } from 'react';
+import SpotifyConnect from './components/SpotifyConnect';
+import axios from "axios"; 
 
-export default function EditProfile() {
-    const [open, setOpen] = React.useState(false);
-    const [bio, setBio] = useState(''); // State for bio
-    const [favoriteSong, setFavoriteSong] = useState(''); // State for favorite song
-    const [favoriteArtist, setFavoriteArtist] = useState(''); // State for favorite artist
-    const [favoriteGenre, setFavoriteGenre] = useState(''); // State for favorite genre
-    const [searchArtistInput, setSearchArtistInput ] = useState("");
-    const [searchSongInput, setSearchSongInput ] = useState("");
+export default function EditProfile({onCreation} ) {
+    const navigate = useNavigate();
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    // handles all user data storing local so when spotify relaunches data is still accessible
+    const storedUserDataJSON = localStorage.getItem('userData');
+    const userData = JSON.parse(storedUserDataJSON);
+    console.log("from local storage", userData);
+
+    // fields set in edit profile page
+    const [bio, setBio] =  useState("");
+    const [selectedSongs, setSelectedSongs] = useState([]);
+    const [selectedArtists, setSelectedArtists] =  useState([]);
+    const [radius, setRadius] = useState(50.0); // State for radius
+    const [pfp, setPfp] = useState(null);
+
+    const handleChangeRadius = (event) => {
+        setRadius(parseInt(event.target.value));
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    
+    var storedJsonString = localStorage.getItem('user');
+
+    // Parse the JSON string back into an object
+    var storedUserObject = JSON.parse(storedJsonString);
+
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setPfp(file);
     };
+
+    async function fileUpload() {
+
+        const formData = new FormData();
+        formData.append("pfp", pfp);
+        formData.append("email", userData.email);
+
+        formData.forEach((value, key) => {
+            console.log(key, value);
+          });
+        try {
+            const response = await axios({
+                method: "POST",
+                url: "http://localhost:5000/api/images/upload",
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": "Bearer " + storedUserObject.token,
+                  },
+            })
+        } catch (error) {
+            console.log("error uploading file", error);
+        }
+    }
+
+    
+
+    const handleSave = async () => {
+        
+
+         const body = {
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            bio: bio,
+            phoneNumber: userData.phoneNumber,
+            gender: userData.gender,
+            latitude: userData.latitude,
+            longitude: userData.longitude,
+            maxDistance: radius,
+            topArtists: selectedArtists,
+            topSongs: selectedSongs }
+
+        
+
+    try {
+        console.log(body)
+        console.log(storedUserObject.token);
+        const response = await axios.post('http://localhost:5000/api/users/registerUser', body, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + storedUserObject.token
+        }
+  });
+
+    console.log(response.data);
+    onCreation();
+    navigate('/profile');
+} catch (error) {
+  console.error('Error saving profile:', error);
+}
+        navigate('/profile');
+    }
+
 
     return (
-        <React.Fragment>
-            <button className="button" variant="outlined" onClick={handleClickOpen}>
-                Edit Profile
-            </button>
-            <Dialog open={open} onClose={handleClose} maxWidth="xl">
-                <h2>Edit Profile</h2>
-                <div className="modal-content" >
-                    <Editer/>
-                    <DialogActions>
-                        <button onClick={handleClose}>Cancel</button>
-                        <button onClick={handleClose}>Save</button>
-                    </DialogActions>
+        <div>
+            <Navbar />
+            <div className="vertical-container">
+                <h1>Edit Profile</h1>
+                <div className="container">
+                <div className="profile" style={{width: '65vh'}}>
+                <h3>Upload Profile Picture </h3>
+                <input type="file" onChange={handleFileChange} />
+                <button className="button" onClick={fileUpload}> Upload </button>
+                
+                    <h3>{userData.firstName}</h3>
+                    <p> Add a bio that says a little about you </p>
+                    <InputGroup classname="mb-3" size="lg">
+                    <FormControl className="bio" style= {{width: '200px'}} as="textarea" rows ={8}
+                        placeholder="Add a bio"
+                        type="input"
+                        onKeyDown={event => {
+                            if (event.key == "Enter") {
+                                console.log("Pressed enter");
+
+                            }
+                        }}
+                    onChange={event => setBio(event.target.value)}
+                    
+                    />
+
+                </InputGroup>
+                        <label>Change Radius (km):</label>
+                        <input type="number" value={radius} onChange={handleChangeRadius} />
+                <div>
+                
+            </div>
+
+            </div>
+                <div className="favorite-music">
+                <SpotifyConnect setSelectedArtists={setSelectedArtists} selectedArtists={selectedArtists} setSelectedSongs={setSelectedSongs} selectedSongs={selectedSongs}/>
                 </div>
-            </Dialog>
-        </React.Fragment>
-    );
+
+
+
+                </div>
+                <button onClick={handleSave} className="button" > Save </button>
+                </div>
+
+            
+        </div>
+    )
 }

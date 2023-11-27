@@ -1,7 +1,14 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUserData } from "../pages/components/User";
+import { useState } from "react";
+
+
+
 
 export default function LogInAccess({email, password}) {
+
+  
         console.log(email);
         console.log(password);
 
@@ -21,7 +28,6 @@ export default function LogInAccess({email, password}) {
         var storedUserObject = JSON.parse(storedJsonString);
 
             // Display the access token in the console
-        console.log("Access Token:", storedUserObject.token);
       }) .catch(error => {
         console.error("Error during login:", error);
         window.alert("Wrong email or password");

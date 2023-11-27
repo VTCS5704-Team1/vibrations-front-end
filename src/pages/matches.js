@@ -7,6 +7,8 @@ const MessengerWindow = ({ onSelect }) => {
     const { userData, updateUserData } = useUserData();
     const matches = userData.likedUsers;
 
+    // matches[index].email
+
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [messageInput, setMessageInput] = useState('');
     const [messages, setMessages] = useState([]);
