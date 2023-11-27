@@ -16,75 +16,75 @@ export default function Profile({onSelect}) {
   // Parse the JSON string back to an object
   const userData = JSON.parse(storedUserDataJSON);
 
-    const name = userData.firstName;
-    const [bio, setBio] = useState("");
-    const [songs, setSongs] = useState([]);
-    const [artists, setArtists] = useState([]);
-    const [pfp, setPfp] = useState("");
-    
-
-    // once their profile is created, then they can see all their profile data
+  const name = userData.firstName;
+  const [bio, setBio] = useState("");
+  const [songs, setSongs] = useState([]);
+  const [artists, setArtists] = useState([]);
+  const [pfp, setPfp] = useState("");
 
 
-    // this will be the getter 
-    async function getUserData() {
-      try {
-        const response = await axios.get("http://localhost:5000/api/users/getUser", 
-        {
-          email: userData.email
-        })
-        .then(response => {
-          console.log(response);
-          setBio(response.data.bio);
-          setSongs(response.data.topSongs);
-          setArtists(response.data.topArtists);
+  // once their profile is created, then they can see all their profile data
 
-          setPfp(response.data.pfp);
-        })
-        
-      }
-      catch (error) {
-        console.log(error);
-      }
+
+  // this will be the getter
+  async function getUserData() {
+    try {
+      const response = await axios.get("http://localhost:5000/api/users/getUser",
+          {
+            email: userData.email
+          })
+          .then(response => {
+            console.log(response);
+            setBio(response.data.bio);
+            setSongs(response.data.topSongs);
+            setArtists(response.data.topArtists);
+
+            setPfp(response.data.pfp);
+          })
+
     }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
-      const navigate = useNavigate();
+  const navigate = useNavigate();
 
-      const handleClick = () => {
-        navigate("/EditProfile");
-      }
-    
-      return (
-        <div >
+  const handleClick = () => {
+    navigate("/EditProfile");
+  }
 
-          <Navbar />
-          <div className='vertical-container'>
-            <h1> {name}'s Profile </h1>
-            {onSelect ? (
+  return (
+      <div >
+
+        <Navbar />
+        <div className='vertical-container'>
+          <h1> {name}'s Profile </h1>
+          {onSelect ? (
               <div>
-            <div className="container">
-          <div className="profile">
-            <img src={pfp} alt="Profile" className="profile-picture" />
-            <h2>{name}</h2>
-            <p>{bio}</p>
-          </div>
-          <div className="favorite-music">
-            <p><strong>Favorite Song:</strong> {songs}</p>
-            <p><strong>Favorite Artist:</strong> {artists}</p>
-          </div>
-          </div>
-          <button className="button" onClick={handleClick}>Edit Profile</button>
-          </div> ) : (
-            <div>
-            <p> Please create your profile</p>
-            <button className="button" onClick={handleClick}>Create Profile</button>
-            </div>
+                <div className="container">
+                  <div className="profile">
+                    <img src={pfp} alt="Profile" className="profile-picture" />
+                    <h2>{name}</h2>
+                    <p>{bio}</p>
+                  </div>
+                  <div className="favorite-music">
+                    <p><strong>Favorite Song:</strong> {songs}</p>
+                    <p><strong>Favorite Artist:</strong> {artists}</p>
+                  </div>
+                </div>
+                <button className="button" onClick={handleClick}>Edit Profile</button>
+              </div> ) : (
+              <div>
+                <p> Please create your profile</p>
+                <button className="button" onClick={handleClick}>Create Profile</button>
+              </div>
           )}
-          
+
         </div>
-        </div>
-      );
-    
+      </div>
+  );
+
 }
 
-    
+

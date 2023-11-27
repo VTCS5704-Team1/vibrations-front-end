@@ -25,9 +25,9 @@ export const UserDataProvider = ({ children }) => {
   };
 
   return (
-    <UserDataContext.Provider value={{ userData, updateUserData }}>
-      {children}
-    </UserDataContext.Provider>
+      <UserDataContext.Provider value={{ userData, updateUserData }}>
+        {children}
+      </UserDataContext.Provider>
   );
 };
 

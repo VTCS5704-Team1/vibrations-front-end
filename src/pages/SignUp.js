@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
 import LogInAccess from '../springboot states/loginAccess';
-import GpsComponent from "./components/GpsComponent";
 
 export default function SignUp() {
 
@@ -30,7 +29,7 @@ export default function SignUp() {
 
         handleSignUp();
 
-        // I just need to rearrange it ,so they have to log in after create profile
+        // I just need to rearrange it so they have to log in after create profile
         navigate("/CreateProfile");
     };
 
@@ -60,9 +59,6 @@ export default function SignUp() {
 
     return (
         <div className="small-vertical-container">
-            <div>
-                <GpsComponent />
-            </div>
             <img src={logo} alt='logo' className="img"/>
             <h2>Sign Up for Vibrations</h2>
             <form onSubmit={handleSubmit}>
