@@ -1,38 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../Navbar';
-import './matches.css';
-import { useUserData } from './components/User';
+import React, { useState } from 'react';
+import Navbar from '../../../vibrations-front-endd/src/Navbar';
+import './matches.css'
 
-const MessengerWindow = ({ onSelect }) => {
-    const { userData, updateUserData } = useUserData();
-    const matches = userData.likedUsers;
 
+const MessengerWindow = () => {
+    const [matches, setMatches] = useState([
+        { name: 'Sarah', profileImageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg' },
+        { name: 'Tim', profileImageUrl: 'https://i.pinimg.com/236x/03/c0/ca/03c0cad4b7411bab862fa1a69decf6b5.jpg' },
+    ]);
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [messageInput, setMessageInput] = useState('');
-    const [messages, setMessages] = useState([]);
     const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(false);
 
-    const sendMessage = async () => {
-        const message = {
-            messageId: '',
-            senderEmail: userData.email,
-            receiverEmail: userData.likedUsers[0].email,
-            content: messageInput,
-        };
-
-        // Send the message to the server
-        const response = await fetch('/api/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-        });
-
-        const responseData = await response.json();
-
-        // Add the message to the messages list
-        setMessages([...messages, responseData]);
+    const handleSendMessage = () => {
+        // Send the message to the selected match
+        console.log(`Sending message "${messageInput}" to ${selectedMatch}`);
 
         // Clear the message input
         setMessageInput('');
@@ -41,104 +23,54 @@ const MessengerWindow = ({ onSelect }) => {
     const handleMatchClick = (match) => {
         setSelectedMatch(match);
         setIsCloseButtonVisible(true);
-
-        // Fetch messages for the selected match
-        fetch(`/api/messages/<span class="math-inline">\{userData\.email\}/</span>{selectedMatch.email}`)
-            .then((response) => response.json())
-            .then((responseData) => {
-                setMessages(responseData);
-            });
     };
 
     const handleCloseButtonClick = () => {
         setIsCloseButtonVisible(false);
         setSelectedMatch(null);
-        setMessages([]);
     };
 
-    useEffect(() => {
-        // Scroll to the bottom of the messages container whenever a new message is added
-        const messagesContainer = document.getElementById('messages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, [messages]);
-
     return (
-        <>
-            <div>
-                <Navbar />
-            </div>
 
-            <div className="vertical-container">
+        <><div>
+            <Navbar />
+        </div><div className="vertical-container">
                 <header className="messenger-header">
                     <h1>Matched!</h1>
-                    <h2>I'd prefer if we put this in a grid format.</h2>
+                    <h2> Id prefer if we put this in a grid format </h2>
+
+
                 </header>
-
-                {onSelect ? (
-                    <div className="messenger-body">
-                        <ul className="matches">
-                            {matches.map((match) => (
-                                <li key={match.name}>
-                                    <div className="match">
-                                        <img
-                                            src={match.profileImageUrl}
-                                            alt={match.name}
-                                            className="match-profile-image"
-                                        />
-                                        {match.name}
-                                        <button
-                                            className="sendmessagebutton"
-                                            onClick={() => handleMatchClick(match)}
-                                        >
-                                            Send Message
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-
-                        {selectedMatch && (
-                            <div className="send-message-dialogue">
-                                <div className="messages" id="messages">
-                                    {messages.map((message) => (
-                                        <div key={message.messageId} className="message">
-                                            {message.senderEmail === userData.email ? (
-                                                <div className="sent-message">
-                                                    <p>{message.content}</p>
-                                                </div>
-                                            ) : (
-                                                <div className="received-message">
-                                                    <p>{message.content}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
+                <div className="messenger-body">
+                    <ul className="matches">
+                        {matches.map((match) => (
+                            <li key={match.name}>
+                                <div className='match'>
+                                    <img src={match.profileImageUrl} alt={match.name} className="match-profile-image" />
+                                    {match.name}
+                                    <button className="button" onClick={() => handleMatchClick(match)}>Send Message</button>
                                 </div>
+                            </li>
+                        ))}
+                    </ul>
 
-                                <input
-                                    type="text"
-                                    value={messageInput}
-                                    onChange={(e) => setMessageInput(e.target.value)}
-                                    placeholder="Type your message here..."
-                                />
-                                <button className="button" onClick={sendMessage}>
-                                    Send
+                    {selectedMatch && (
+                        <div className="send-message-dialogue">
+                            <input
+                                type="text"
+                                value={messageInput}
+                                onChange={(e) => setMessageInput(e.target.value)}
+                                placeholder="Type your message here..." />
+                            <button className="button" onClick={handleSendMessage}>Send</button>
+
+                            {isCloseButtonVisible && (
+                                <button className="button" onClick={handleCloseButtonClick}>
+                                    Close Message
                                 </button>
-
-                                {isCloseButtonVisible && (
-                                    <button className="button" onClick={handleCloseButtonClick}>
-                                        Close Message
-                                    </button>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div>
-                        <p>Please create your profile by clicking "Create Profile" in the profile tab</p>
-                    </div>
-                )}
-                
+                            )}
+                        </div>
+                    )}
+                </div>
             </div></>
 
     );
