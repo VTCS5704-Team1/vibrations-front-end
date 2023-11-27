@@ -7,7 +7,7 @@ import { useUserData } from './components/User';
 const Homepage = ({onSelect}) => {
 
     const  {userData, updateUserData} = useUserData();
-    
+
     const [matchedProfiles, setMatchedProfiles] = useState([
         {
             name: 'Sarah',
@@ -60,34 +60,34 @@ const Homepage = ({onSelect}) => {
                 <h1>Listeners In Your Area</h1>
 
                 {onSelect ? (
-                    <div> 
-                <div className='top-bar'>
-                        <button onClick={handleLikeProfile} className='star-button'>
-                            <FaStar style={{ fontSize: '2em' }} />
-                        </button>
-                </div>
-                <div className="container">
-                <div className="profile">
-                        <img src={matchedProfiles[currentProfileIndex].imageUrl} alt="Profile" />
-                        <h2>{matchedProfiles[currentProfileIndex].name}</h2>
-                        <p>{matchedProfiles[currentProfileIndex].description}</p>
-                </div>
-                <div className="favorite-music">
-                        <p><strong>Favorite Song:</strong> {matchedProfiles[currentProfileIndex].favoriteSong}</p>
-                        <p><strong>Favorite Artist:</strong> {matchedProfiles[currentProfileIndex].favoriteArtist}</p>
-                        <p><strong>Favorite Genre:</strong> {matchedProfiles[currentProfileIndex].favoriteGenre}</p>
-                </div>
-                </div>
-                <div className="button-container"> 
-                    <div className="button" onClick={handlePreviousProfile}>
-                        &lt;
+                    <div>
+                        <div className='top-bar'>
+                            <button onClick={handleLikeProfile} className='star-button'>
+                                <FaStar style={{ fontSize: '2em' }} />
+                            </button>
+                        </div>
+                        <div className="container">
+                            <div className="profile">
+                                <img src={matchedProfiles[currentProfileIndex].imageUrl} alt="Profile" />
+                                <h2>{matchedProfiles[currentProfileIndex].name}</h2>
+                                <p>{matchedProfiles[currentProfileIndex].description}</p>
+                            </div>
+                            <div className="favorite-music">
+                                <p><strong>Favorite Song:</strong> {matchedProfiles[currentProfileIndex].favoriteSong}</p>
+                                <p><strong>Favorite Artist:</strong> {matchedProfiles[currentProfileIndex].favoriteArtist}</p>
+                                <p><strong>Favorite Genre:</strong> {matchedProfiles[currentProfileIndex].favoriteGenre}</p>
+                            </div>
+                        </div>
+                        <div className="button-container">
+                            <div className="button" onClick={handlePreviousProfile}>
+                                &lt;
+                            </div>
+                            <div className="button" onClick={handleNextProfile}>
+                                &gt;
+                            </div>
+                        </div>
                     </div>
-                    <div className="button" onClick={handleNextProfile}>
-                        &gt;
-                    </div> 
-                </div>
-                </div>
-                ) : ( 
+                ) : (
                     <p> Please create your profile by clicking "Create Profile" in the profile tab</p>
                 )}
             </div>
