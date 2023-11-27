@@ -10,14 +10,18 @@ export const UserDataProvider = ({ children }) => {
     lastName: '',
     gender: '',
     phoneNumber: '',
-    likedUsers: [],
+    latitude: '',
+    longitude:'',
+    likedUsers: []
   });
+
 
   const updateUserData = (newUserData) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
       ...newUserData,
     }));
+
   };
 
   return (

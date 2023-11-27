@@ -118,67 +118,53 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
 
     const handleCheckboxClickArtist = (clickedArtist) => {
       if (!clickedArtist) {
-        return; // Add a check to handle null value
+        return;
       }
     
-      console.log(selectedArtists);
-      const isArtistSelected = selectedArtists.some(
-        (artist) => artist.id === clickedArtist.id
-      );
+      const artistName = clickedArtist.name;
+    
+      const isArtistSelected = selectedArtists.includes(artistName);
     
       if (isArtistSelected) {
-        // If artist is selected, remove it from the selected list
         const updatedSelectedArtists = selectedArtists.filter(
-          (artist) => artist.id !== clickedArtist.id
+          (artist) => artist !== artistName
         );
         setSelectedArtists(updatedSelectedArtists);
         setSelectedArtistsCount((count) => count - 1);
       } else {
-        // If artist is not selected and count is less than 5, add it to the selected list
         if (selectedArtistsCount < 5) {
-          const updatedSelectedArtists = [...selectedArtists, clickedArtist];
+          const updatedSelectedArtists = [...selectedArtists, artistName];
           setSelectedArtists(updatedSelectedArtists);
           setSelectedArtistsCount((count) => count + 1);
         } else {
-          // Uncheck the checkbox
-          document.getElementById(`flexCheckDefault-${clickedArtist.id}`).checked = false;
-          // Handle the case when the user tries to select more than 5 artists
-          console.warn('You can select up to 5 artists.');
           window.alert('You can select up to 5 artists.');
-          // You might want to show a user-friendly message or take other actions
         }
       }
     };
 
     const handleCheckboxClickSong = (clickedSong) => {
       if (!clickedSong) {
-        return; // Add a check to handle null value
+        return;
       }
     
-      console.log(selectedSongs);
-      const isSongSelected = selectedSongs.some(
-        (song) => song.id === clickedSong.id
-      );
+      const songName = clickedSong.name;
+      const artistName = clickedSong.artists[0].name;
+    
+      const isSongSelected = selectedSongs.includes(`${songName} - ${artistName}`);
     
       if (isSongSelected) {
-        // If artist is selected, remove it from the selected list
         const updatedSelectedSongs = selectedSongs.filter(
-          (song) => song.id !== clickedSong.id
+          (song) => song !== `${songName} - ${artistName}`
         );
         setSelectedSongs(updatedSelectedSongs);
         setSelectedSongsCount((count) => count - 1);
       } else {
-        // If artist is not selected and count is less than 5, add it to the selected list
         if (selectedSongsCount < 5) {
-          const updatedSelectedSongs = [...selectedSongs, clickedSong];
+          const updatedSelectedSongs = [...selectedSongs, `${songName} - ${artistName}`];
           setSelectedSongs(updatedSelectedSongs);
           setSelectedSongsCount((count) => count + 1);
         } else {
-          // Uncheck the checkbox
-          document.getElementById(`flexCheckDefault-${clickedSong.id}`).checked = false;
-
           window.alert('You can select up to 5 songs.');
-          // You might want to show a user-friendly message or take other actions
         }
       }
     };

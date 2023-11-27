@@ -2,15 +2,20 @@
 import React, { useState } from 'react';
 import './profile.css'
 import Navbar from '../Navbar';
-import { Button } from 'react-bootstrap';
-import EditProfile from './EditProfile';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUserData } from './components/User';
 
 export default function Profile({onSelect}) {
 
-  const { userData, updateUserData } = useUserData();
+  const {userDataP, updateUserData} = useUserData();
+
+
+  const storedUserDataJSON = localStorage.getItem('userData');
+
+  // Parse the JSON string back to an object
+  const userData = JSON.parse(storedUserDataJSON);
+
     const name = userData.firstName;
     const [bio, setBio] = useState("");
     const [songs, setSongs] = useState([]);

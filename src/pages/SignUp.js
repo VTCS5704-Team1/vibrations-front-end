@@ -1,13 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
 import LogInAccess from '../springboot states/loginAccess';
-import { useUserData } from './components/User';
+import GPSTracker from './components/GpsComponent';
+
+const GPSTrackerComponent = () => {
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+          console.log(latitude);
+          console.log(longitude);
+        },
+        (error) => {
+          console.error('Error fetching location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation API not supported');
+    }
+  }, []);
+
+  return location;
+};
+
+
 
 export default function SignUp({ onLogin }) {
 
-  const { userData, updateUserData } = useUserData();
+  const gpsLocation = GPSTrackerComponent();
+
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
+
+  // Update location state
+  useEffect(() => {
+    setLocation(gpsLocation);
+  }, [gpsLocation]);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -30,71 +69,88 @@ export default function SignUp({ onLogin }) {
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/api/users/register',
-        {
-          email: formData.email,
-          password: formData.password,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          birthdate: formData.birthdate,
-          gender: formData.gender,
-          phoneNumber: "+1" + formData.phoneNumber,
-        },
-        {
-          headers: { 'Content-type': 'application/json' },
+
+  
+      // This is where the second try block should start
+      try {
+        const response = await axios.post(
+          'http://localhost:5000/api/users/register',
+          {
+            email: formData.email,
+            password: formData.password,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            birthdate: formData.birthdate,
+            gender: formData.gender,
+            phoneNumber: "+1" + formData.phoneNumber,
+          },
+          {
+            headers: { 'Content-type': 'application/json' },
+          }
+        );
+  
+        if (response.status === 200) {
+          const email = formData.email;
+          const password = formData.password;
+  
+          // Log in the user after successful sign-up
+          LogInAccess({ email, password });
+  
+          onLogin();
+  
+          // You can perform additional actions on successful sign-up if needed
+  
+          return response;
+        } else {
+          // Handle unsuccessful sign-up
+          console.error('Sign-up failed with status:', response.status);
+          window.alert('Sign-up failed. Please try again.');
+          throw new Error(`Sign-up failed with status: ${response.status}`);
         }
-      );
-
-      if (response.status === 200) {
-        const email = formData.email;
-        const password = formData.password;
-
-        
-        // Log in the user after successful sign-up
-        LogInAccess({ email, password });
-
-        onLogin();
-
-        // You can perform additional actions on successful sign-up if needed
-
-        return response;
-      } else {
-        // Handle unsuccessful sign-up
-        console.error('Sign-up failed with status:', response.status);
+      } catch (error) {
+        // Handle network errors, request cancellation, or any other errors
+        console.error('Error during sign up:', error);
         window.alert('Sign-up failed. Please try again.');
-        throw new Error(`Sign-up failed with status: ${response.status}`);
+        throw error; // Rethrow the error to be caught by the handleSubmit .catch()
       }
-    } catch (error) {
-      // Handle network errors, request cancellation, or any other errors
-      console.error('Error during sign up:', error);
-      window.alert('Sign-up failed. Please try again.');
-      throw error; // Rethrow the error to be caught by the handleSubmit .catch()
-    }
+      // This is where the second try block should end
+    // } catch (error) {
+    //   // Handle errors from the outer try block
+    //   console.error('Error during sign up:', error);
+    //   // Optionally, you can perform additional actions or display an error message
+    // }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
 
     try {
       await handleSignUp();
-
-      updateUserData({ firstName: formData.firstName, 
-       lastName: formData.lastName, 
-       email: formData.email,
-       gender: formData.gender, 
-       phoneNumber: formData.phoneNumber});
       // Redirect or perform other actions after successful sign-up
-      navigate('/profile');
+      navigate('/EditProfile');
     } catch (error) {
       // Handle errors from handleSignUp
       console.error('Error during sign up:', error);
       // Optionally, you can perform additional actions or display an error message
     }
+
+    const userData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      gender: formData.gender,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      phoneNumber: formData.phoneNumber,
+    };
+    console.log(userData);
+    const userDataJSON = JSON.stringify(userData);
+    localStorage.setItem('userData', userDataJSON);
   };
 
   return (
+    
     <div className="small-vertical-container">
       <img src={logo} alt="logo" className="img" />
       <h2>Sign Up for Vibrations</h2>

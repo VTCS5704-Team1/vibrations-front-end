@@ -6,7 +6,7 @@ import { useUserData } from './components/User';
 
 const Homepage = ({onSelect}) => {
 
-    const { userData, updateUserData } = useUserData();
+    const  {userData, updateUserData} = useUserData();
     
     const [matchedProfiles, setMatchedProfiles] = useState([
         {
