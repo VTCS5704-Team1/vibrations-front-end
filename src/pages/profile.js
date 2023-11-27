@@ -41,10 +41,10 @@ export default function Profile({onSelect}) {
         console.log(userData.email);
         const response = await axios({
           method: "GET",
-          url: "http://localhost:5000/api/users/getUser",
-          params: {
+          url: `http://localhost:5000/api/users/getUser?email=${userData.email}`,
+          /* params: {
             "email": userData.email,
-          },
+          }, */
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + storedUserObject.token,
