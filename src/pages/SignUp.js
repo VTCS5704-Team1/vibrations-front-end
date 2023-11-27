@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
 import LogInAccess from '../springboot states/loginAccess';
-import GPSTracker from './components/GpsComponent';
+import { useUserData } from './components/User';
 
 const GPSTrackerComponent = () => {
+
   const [location, setLocation] = useState({
     latitude: null,
     longitude: null,
@@ -36,11 +37,13 @@ const GPSTrackerComponent = () => {
 
 export default function SignUp({ onLogin }) {
 
+  const { userData, updateUserData } = useUserData();
+
   const gpsLocation = GPSTrackerComponent();
 
   const [location, setLocation] = useState({
-    latitude: null,
-    longitude: null,
+    latitude: 0.0,
+    longitude: 0.0,
   });
 
   // Update location state
@@ -55,7 +58,7 @@ export default function SignUp({ onLogin }) {
     lastName: '',
     birthdate: '',
     gender: '',
-    phoneNumber: '',
+    phoneNumber: 0,
   });
 
   const handleChange = (e) => {
@@ -113,12 +116,6 @@ export default function SignUp({ onLogin }) {
         window.alert('Sign-up failed. Please try again.');
         throw error; // Rethrow the error to be caught by the handleSubmit .catch()
       }
-      // This is where the second try block should end
-    // } catch (error) {
-    //   // Handle errors from the outer try block
-    //   console.error('Error during sign up:', error);
-    //   // Optionally, you can perform additional actions or display an error message
-    // }
   };
 
   const handleSubmit = async (e) => {
@@ -134,8 +131,15 @@ export default function SignUp({ onLogin }) {
       console.error('Error during sign up:', error);
       // Optionally, you can perform additional actions or display an error message
     }
+    updateUserData({firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      gender: formData.gender,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      phoneNumber: formData.phoneNumber});
 
-    const userData = {
+    const userDataForm = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
@@ -144,8 +148,8 @@ export default function SignUp({ onLogin }) {
       longitude: location.longitude,
       phoneNumber: formData.phoneNumber,
     };
-    console.log(userData);
-    const userDataJSON = JSON.stringify(userData);
+    console.log(userDataForm);
+    const userDataJSON = JSON.stringify(userDataForm);
     localStorage.setItem('userData', userDataJSON);
   };
 

@@ -3,6 +3,7 @@ import logo from './vib_logo.jpg';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LogInAccess from "../springboot states/loginAccess";
+import { useUserData } from "./components/User";
 
 function LoginPage({ onLogin }) {
     const [email, setEmail] = useState("");
@@ -10,8 +11,12 @@ function LoginPage({ onLogin }) {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
+    const {userData, updateUserData} = useUserData();
 
     const handleUserLogin = () => {
+
+      
+
 
       // Set initial error values to empty
       setEmailError("")
@@ -43,8 +48,12 @@ function LoginPage({ onLogin }) {
             // Parse the JSON string back into an object
       var storedUserObject = JSON.parse(storedJsonString);
 
-      
+      // this means the log in was successful 
       if (storedUserObject !== null && storedUserObject.token != null) {
+          updateUserData({email: email});
+          // check if a user exists in sql, if it does then use axios to get all the user data and save it
+              // they acc shouldn't be able to login at all if they haven't created a profile 
+          // if the user doesnt exist in sql
           console.log(storedUserObject.token);
           onLogin();
           navigate("/home");

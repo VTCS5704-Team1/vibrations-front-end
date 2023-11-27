@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './profile.css'
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
@@ -20,32 +20,48 @@ export default function Profile({onSelect}) {
     const [bio, setBio] = useState("");
     const [songs, setSongs] = useState([]);
     const [artists, setArtists] = useState([]);
-    const [pfp, setPfp] = useState("");
+    // const [pfp, setPfp] = useState("");
     
 
     // once their profile is created, then they can see all their profile data
+    useEffect(() => {
+      getUserData();
+    }, []);
 
+    var storedJsonString = localStorage.getItem('user');
+
+    // Parse the JSON string back into an object
+    var storedUserObject = JSON.parse(storedJsonString);
 
     // this will be the getter 
     async function getUserData() {
-      try {
-        const response = await axios.get("http://localhost:5000/api/users/getUser", 
-        {
-          email: userData.email
-        })
-        .then(response => {
-          console.log(response);
-          setBio(response.data.bio);
-          setSongs(response.data.topSongs);
-          setArtists(response.data.topArtists);
 
-          setPfp(response.data.pfp);
-        })
+      try {
+
+        console.log(userData.email);
+        const response = await axios({
+          method: "GET",
+          url: "http://localhost:5000/api/users/getUser",
+          params: {
+            "email": userData.email,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + storedUserObject.token,
+          },
+        });
+      
+        console.log(response);
+        setBio(response.data.bio);
+        setSongs(response.data.topSongs);
+        setArtists(response.data.topArtists);
+        // setPfp(response.data.pfp);
+      
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
         
-      }
-      catch (error) {
-        console.log(error);
-      }
+      
     }
 
       const navigate = useNavigate();
@@ -60,11 +76,10 @@ export default function Profile({onSelect}) {
           <Navbar />
           <div className='vertical-container'>
             <h1> {name}'s Profile </h1>
-            {onSelect ? (
               <div>
             <div className="container">
           <div className="profile">
-            <img src={pfp} alt="Profile" className="profile-picture" />
+            {/* <img src={pfp} alt="Profile" className="profile-picture" /> */}
             <h2>{name}</h2>
             <p>{bio}</p>
           </div>
@@ -74,14 +89,9 @@ export default function Profile({onSelect}) {
           </div>
           </div>
           <button className="button" onClick={handleClick}>Edit Profile</button>
-          </div> ) : (
-            <div>
-            <p> Please create your profile</p>
-            <button className="button" onClick={handleClick}>Create Profile</button>
-            </div>
-          )}
-          
+          </div> 
         </div>
+
         </div>
       );
     

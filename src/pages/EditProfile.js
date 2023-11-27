@@ -18,7 +18,7 @@ export default function EditProfile({onCreation} ) {
     const [bio, setBio] =  useState("");
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [selectedArtists, setSelectedArtists] =  useState([]);
-    const [radius, setRadius] = useState(50); // State for radius
+    const [radius, setRadius] = useState(50.0); // State for radius
     const [pfp, setPfp] = useState(null);
 
 
@@ -42,8 +42,8 @@ export default function EditProfile({onCreation} ) {
 
     const handleSave = async () => {
         
-        const formData = new FormData();
-        formData.append("body", JSON.stringify({
+
+         const body = {
             firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
@@ -54,38 +54,26 @@ export default function EditProfile({onCreation} ) {
             longitude: userData.longitude,
             maxDistance: radius,
             topArtists: selectedArtists,
-            topSongs: selectedSongs
+            topSongs: selectedSongs }
 
-        }));
-        formData.append("pfp", pfp);
-        console.log(formData);
-
-        console.log(selectedArtists);
-        console.log(selectedSongs);
-
-
-        try {
-            
-            console.log(formData);
-            // Assuming profileData is an object with the necessary properties
-            const response = await axios.post('http://localhost:5000/registerUser', {
-                formData
-            }, {
-                headers: {
-                    "Content-type": "multipart/form-data",
-                    "Authorization": "Bearer " + storedUserObject.token
-                }
-                
-              });
         
-            console.log(response.data); // Handle the response from the server as needed
-            // If successful, you might want to navigate to the profile page or perform other actions
-            navigate('/profile');
-          } catch (error) {
-            console.error('Error saving profile:', error);
-            // Handle error, show a message, etc.
-          }
-        onCreation();
+
+    try {
+        console.log(body)
+        console.log(storedUserObject.token);
+        const response = await axios.post('http://localhost:5000/api/users/registerUser', body, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + storedUserObject.token
+        }
+  });
+
+    console.log(response.data);
+    onCreation();
+    navigate('/profile');
+} catch (error) {
+  console.error('Error saving profile:', error);
+}
         navigate('/profile');
     }
 
