@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const GPSTracker = () => {
     const [location, setLocation] = useState({
@@ -12,6 +13,7 @@ const GPSTracker = () => {
             navigator.geolocation.getCurrentPosition((position) => {
                 const { latitude, longitude } = position.coords;
                 setLocation({ latitude, longitude });
+                sendLocationToServer({ latitude, longitude });
                 fetchMatches({ latitude, longitude });
             }, (error) => {
                 console.error('Error fetching location:', error);
@@ -21,11 +23,24 @@ const GPSTracker = () => {
         }
     }, []);
 
+    const sendLocationToServer = (userLocation) => {
+        // send location data to the server
+        axios.post('YOUR_SERVER_URL/send-location', {
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
+        })
+            .then(() => {
+                console.log('Location data sent to server');
+            })
+            .catch((error) => {
+                console.error('Error sending location data:', error);
+            });
+    };
+
     const fetchMatches = (userLocation) => {
-        // Implement API call to fetch matches within a 50 km radius
-        // Replace 'YOUR_API_URL'
-        fetch(`YOUR_API_URL?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&radius=50`)
-            .then((response) => response.json())
+        // fetch matches within a 50 km radius
+        axios.get(`YOUR_API_URL?latitude=${userLocation.latitude}&longitude=${userLocation.longitude}&radius=${userLocation.radius}`)
+            .then((response) => response.data) // Parse JSON response data
             .then((data) => {
                 setMatches(data);
             })
