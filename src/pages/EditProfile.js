@@ -139,9 +139,6 @@ export default function EditProfile({onCreation} ) {
                 <div className="favorite-music">
                 <SpotifyConnect setSelectedArtists={setSelectedArtists} selectedArtists={selectedArtists} setSelectedSongs={setSelectedSongs} selectedSongs={selectedSongs}/>
                 </div>
-
-
-
                 </div>
                 <button onClick={handleSave} className="button" > Save </button>
                 </div>

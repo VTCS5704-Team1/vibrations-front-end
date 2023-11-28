@@ -121,19 +121,15 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         return;
       }
     
-      const artistName = clickedArtist.name;
-    
-      const isArtistSelected = selectedArtists.includes(artistName);
+      const isArtistSelected = selectedArtists.some((artist) => artist.id === clickedArtist.id);
     
       if (isArtistSelected) {
-        const updatedSelectedArtists = selectedArtists.filter(
-          (artist) => artist !== artistName
-        );
+        const updatedSelectedArtists = selectedArtists.filter((artist) => artist.id !== clickedArtist.id);
         setSelectedArtists(updatedSelectedArtists);
         setSelectedArtistsCount((count) => count - 1);
       } else {
         if (selectedArtistsCount < 5) {
-          const updatedSelectedArtists = [...selectedArtists, artistName];
+          const updatedSelectedArtists = [...selectedArtists, clickedArtist];
           setSelectedArtists(updatedSelectedArtists);
           setSelectedArtistsCount((count) => count + 1);
         } else {
@@ -141,26 +137,25 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         }
       }
     };
-
+    
     const handleCheckboxClickSong = (clickedSong) => {
       if (!clickedSong) {
         return;
       }
     
-      const songName = clickedSong.name;
-      const artistName = clickedSong.artists[0].name;
-    
-      const isSongSelected = selectedSongs.includes(`${songName} - ${artistName}`);
+      const isSongSelected = selectedSongs.some(
+        (song) => song.id === clickedSong.id && song.artists[0].id === clickedSong.artists[0].id
+      );
     
       if (isSongSelected) {
         const updatedSelectedSongs = selectedSongs.filter(
-          (song) => song !== `${songName} - ${artistName}`
+          (song) => song.id !== clickedSong.id || song.artists[0].id !== clickedSong.artists[0].id
         );
         setSelectedSongs(updatedSelectedSongs);
         setSelectedSongsCount((count) => count - 1);
       } else {
         if (selectedSongsCount < 5) {
-          const updatedSelectedSongs = [...selectedSongs, `${songName} - ${artistName}`];
+          const updatedSelectedSongs = [...selectedSongs, clickedSong];
           setSelectedSongs(updatedSelectedSongs);
           setSelectedSongsCount((count) => count + 1);
         } else {
@@ -168,6 +163,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         }
       }
     };
+    
 
 
     // search for artist

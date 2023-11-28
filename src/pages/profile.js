@@ -11,7 +11,6 @@ export default function Profile({onSelect}) {
 
   const {userDataP, updateUserData} = useUserData();
 
-
   const storedUserDataJSON = localStorage.getItem('userData');
 
   // Parse the JSON string back to an object
@@ -56,6 +55,7 @@ export default function Profile({onSelect}) {
         setPfp(response.data.pfp);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        window.alert("Please create your profile!");
       }
     }
 
@@ -73,7 +73,7 @@ export default function Profile({onSelect}) {
     
       return (
         <div >
-
+          
           <Navbar />
           <div className='vertical-container'>
             <h1> {name}'s Profile </h1>
