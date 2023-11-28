@@ -10,22 +10,7 @@ const Homepage = ({onSelect}) => {
     const  {userData, updateUserData} = useUserData();
 
     const [matchedProfiles, setMatchedProfiles] = useState([
-        {
-            name: 'Sarah',
-            description: 'I love listening to music when I work out and when I study!',
-            favoriteSong: 'Radioactive',
-            favoriteArtist: 'Maroon 5',
-            favoriteGenre: 'Pop',
-            imageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg',
-        },
-        {
-            name: 'John',
-            imageUrl: 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
-            description: 'I enjoy hiking and reading books!',
-            favoriteSong: 'Shape of You',
-            favoriteArtist: 'Ed Sheeran',
-            favoriteGenre: 'Pop',
-        },
+        
     ]);
 
     async function getAllUsers() {
@@ -45,7 +30,7 @@ const Homepage = ({onSelect}) => {
               "Authorization": "Bearer " + storedUserObject.token,
             },
           });
-      
+          setMatchedProfiles(response.data);
           console.log(response.data); // Assuming you want to log the response data
         } catch (error) {
           console.error('Error fetching all matches:', error);
@@ -55,6 +40,19 @@ const Homepage = ({onSelect}) => {
       useEffect(() => {
         getAllUsers();
       }, []);
+
+      const [match, setMatch] = {
+        firstName: '',
+        bio: '',
+        topArtist: '',
+        topSong: '',
+        pfp: ''
+      };
+
+      const getCurrentProfile =() => {
+        
+      }
+
 
 
 
