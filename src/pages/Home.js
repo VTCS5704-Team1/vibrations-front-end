@@ -1,8 +1,9 @@
 import Navbar from '../Navbar';
 import './Home.css'
 import { FaHeart, FaStar } from 'react-icons/fa';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useUserData } from './components/User';
+import axios from 'axios';
 
 const Homepage = ({onSelect}) => {
 
@@ -26,6 +27,35 @@ const Homepage = ({onSelect}) => {
             favoriteGenre: 'Pop',
         },
     ]);
+
+    async function getAllUsers() {
+        var storedJsonString = localStorage.getItem('user');
+      
+        // Parse the JSON string back into an object
+        var storedUserObject = JSON.parse(storedJsonString);
+      
+        try {
+          const response = await axios({
+            method: "GET",
+            url: `http://localhost:5000/api/users/all`,
+            /* params: {
+              "email": userData.email,
+            }, */
+            headers: {
+              "Authorization": "Bearer " + storedUserObject.token,
+            },
+          });
+      
+          console.log(response.data); // Assuming you want to log the response data
+        } catch (error) {
+          console.error('Error fetching all matches:', error);
+        }
+      }
+      
+      useEffect(() => {
+        getAllUsers();
+      }, []);
+
 
 
     const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
@@ -58,8 +88,6 @@ const Homepage = ({onSelect}) => {
             <Navbar />
             <div className='vertical-container'>
                 <h1>Listeners In Your Area</h1>
-
-                {onSelect ? (
                     <div>
                         <div className='top-bar'>
                             <button onClick={handleLikeProfile} className='star-button'>
@@ -87,9 +115,6 @@ const Homepage = ({onSelect}) => {
                             </div>
                         </div>
                     </div>
-                ) : (
-                    <p> Please create your profile by clicking "Create Profile" in the profile tab</p>
-                )}
             </div>
         </div>
     );
