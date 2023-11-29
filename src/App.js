@@ -48,9 +48,9 @@ function App() {
           ) : (
               <>
               <Routes>
+              <Route path="/profile" element={<Profile />} />
               <Route path="/EditProfile" element={<EditProfile onCreation={handleCreation}/>} />
               <Route path="/home" element={<Home onSelect={isCreated}/>} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings onLogOut ={handleLogOut} />} />
               <Route path="/matches" element={<Matches onSelect={isCreated} />} />
               </Routes>

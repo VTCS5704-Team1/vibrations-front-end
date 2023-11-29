@@ -9,9 +9,6 @@ import getUserData from '../springboot states/getUserAccess';
 
 export default function Profile({onSelect}) {
 
-  const {userDataP, updateUserData} = useUserData();
-
-
   const storedUserDataJSON = localStorage.getItem('userData');
 
   // Parse the JSON string back to an object
@@ -36,6 +33,8 @@ export default function Profile({onSelect}) {
 
     async function getUserData() {
 
+      console.log(storedEmail);
+
     const encodedEmail = encodeURIComponent(storedEmail);
     try {
       const response = await axios({
@@ -56,6 +55,7 @@ export default function Profile({onSelect}) {
         setPfp(response.data.pfp);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        window.alert("Please create your profile!");
       }
     }
 
@@ -63,17 +63,10 @@ export default function Profile({onSelect}) {
       getUserData();
     }, []);
 
-   
-
-      const navigate = useNavigate();
-
-      const handleClick = () => {
-        navigate("/EditProfile");
-      }
     
       return (
         <div >
-
+          
           <Navbar />
           <div className='vertical-container'>
             <h1> {name}'s Profile </h1>
@@ -100,7 +93,6 @@ export default function Profile({onSelect}) {
            
           </div>
           </div>
-          <button className="button" onClick={handleClick}>Edit Profile</button>
           </div> 
         </div>
 

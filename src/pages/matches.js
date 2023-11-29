@@ -7,49 +7,47 @@ const MessengerWindow = ({ onSelect }) => {
     const { userData, updateUserData } = useUserData();
     const matches = userData.likedUsers;
 
-    // matches[index].email
-
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [messageInput, setMessageInput] = useState('');
     const [messages, setMessages] = useState([]);
     const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(false);
 
     const sendMessage = async () => {
-        const message = {
-            messageId: '',
-            senderEmail: userData.email,
-            receiverEmail: userData.likedUsers[0].email,
-            content: messageInput,
-        };
+        // const message = {
+        //     messageId: '',
+        //     senderEmail: userData.email,
+        //     receiverEmail: userData.likedUsers[0].email,
+        //     content: messageInput,
+        // };
 
-        // Send the message to the server
-        const response = await fetch('/api/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-        });
+        // // Send the message to the server
+        // const response = await fetch('/api/messages', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(message),
+        // });
 
-        const responseData = await response.json();
+        // const responseData = await response.json();
 
-        // Add the message to the messages list
-        setMessages([...messages, responseData]);
+        // // Add the message to the messages list
+        // setMessages([...messages, responseData]);
 
-        // Clear the message input
-        setMessageInput('');
+        // // Clear the message input
+        // setMessageInput('');
     };
 
     const handleMatchClick = (match) => {
         setSelectedMatch(match);
         setIsCloseButtonVisible(true);
 
-        // Fetch messages for the selected match
-        fetch(`/api/messages/<span class="math-inline">\{userData\.email\}/</span>{selectedMatch.email}`)
-            .then((response) => response.json())
-            .then((responseData) => {
-                setMessages(responseData);
-            });
+        // // Fetch messages for the selected match
+        // fetch(`/api/messages/<span class="math-inline">\{userData\.email\}/</span>{selectedMatch.email}`)
+        //     .then((response) => response.json())
+        //     .then((responseData) => {
+        //         setMessages(responseData);
+        //     });
     };
 
     const handleCloseButtonClick = () => {
@@ -58,11 +56,11 @@ const MessengerWindow = ({ onSelect }) => {
         setMessages([]);
     };
 
-    useEffect(() => {
-        // Scroll to the bottom of the messages container whenever a new message is added
-        const messagesContainer = document.getElementById('messages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, [messages]);
+    // useEffect(() => {
+    //     // Scroll to the bottom of the messages container whenever a new message is added
+    //     const messagesContainer = document.getElementById('messages');
+    //     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // }, [messages]);
 
     return (
         <>
@@ -73,10 +71,7 @@ const MessengerWindow = ({ onSelect }) => {
             <div className="vertical-container">
                 <header className="messenger-header">
                     <h1>Matched!</h1>
-                    <h2>I'd prefer if we put this in a grid format.</h2>
                 </header>
-
-                {onSelect ? (
                     <div className="messenger-body">
                         <ul className="matches">
                             {matches.map((match) => (
@@ -84,12 +79,11 @@ const MessengerWindow = ({ onSelect }) => {
                                     <div className="match">
                                         <img
                                             src={match.profileImageUrl}
-                                            alt={match.name}
                                             className="match-profile-image"
                                         />
-                                        {match.name}
+                                        {match.firstName}
                                         <button
-                                            className="sendmessagebutton"
+                                            className="button"
                                             onClick={() => handleMatchClick(match)}
                                         >
                                             Send Message
@@ -135,11 +129,6 @@ const MessengerWindow = ({ onSelect }) => {
                             </div>
                         )}
                     </div>
-                ) : (
-                    <div>
-                        <p>Please create your profile by clicking "Create Profile" in the profile tab</p>
-                    </div>
-                )}
                 
             </div></>
 

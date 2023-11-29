@@ -73,8 +73,7 @@ export default function SignUp({ onLogin }) {
 
   const handleSignUp = async () => {
 
-  
-      // This is where the second try block should start
+
       try {
         const response = await axios.post(
           'http://localhost:5000/api/users/register',
@@ -91,7 +90,7 @@ export default function SignUp({ onLogin }) {
             headers: { 'Content-type': 'application/json' },
           }
         );
-  
+          console.log(response);
         if (response.status === 200) {
           const email = formData.email;
           const password = formData.password;
