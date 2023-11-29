@@ -12,7 +12,7 @@ export default function LogInAccess({email, password}) {
         console.log(email);
         console.log(password);
 
-        axios.post("http://localhost:5000/api/users/login", {
+        axios.post("http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/login", {
         email: email,
         password: password
       }, {
