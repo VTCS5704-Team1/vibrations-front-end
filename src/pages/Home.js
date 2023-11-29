@@ -9,9 +9,14 @@ const Homepage = ({onSelect}) => {
 
     const  {userData, updateUserData} = useUserData();
 
-    const [matchedProfiles, setMatchedProfiles] = useState([
-        
-    ]);
+    const [matchedProfiles, setMatchedProfiles] = useState([{
+        name: 'Sarah',
+        description: 'I love listening to music when I work out and when I study!',
+        favoriteSong: 'Radioactive',
+        favoriteArtist: 'Maroon 5',
+        favoriteGenre: 'Pop',
+        imageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg',
+    },]);
 
     async function getAllUsers() {
         var storedJsonString = localStorage.getItem('user');
@@ -30,8 +35,9 @@ const Homepage = ({onSelect}) => {
               "Authorization": "Bearer " + storedUserObject.token,
             },
           });
-          setMatchedProfiles(response.data);
-          console.log(response.data); // Assuming you want to log the response data
+          console.log(response.data); 
+          const filteredProfiles = response.data.filter(profile => profile.email !== userData.email);
+            setMatchedProfiles(filteredProfiles);
         } catch (error) {
           console.error('Error fetching all matches:', error);
         }
@@ -40,18 +46,6 @@ const Homepage = ({onSelect}) => {
       useEffect(() => {
         getAllUsers();
       }, []);
-
-      const [match, setMatch] = {
-        firstName: '',
-        bio: '',
-        topArtist: '',
-        topSong: '',
-        pfp: ''
-      };
-
-      const getCurrentProfile =() => {
-        
-      }
 
 
 
@@ -87,6 +81,8 @@ const Homepage = ({onSelect}) => {
             <div className='vertical-container'>
                 <h1>Listeners In Your Area</h1>
                     <div>
+                    {matchedProfiles.length > 0 ? (
+                        <div>
                         <div className='top-bar'>
                             <button onClick={handleLikeProfile} className='star-button'>
                                 <FaStar style={{ fontSize: '2em' }} />
@@ -94,24 +90,45 @@ const Homepage = ({onSelect}) => {
                         </div>
                         <div className="container">
                             <div className="profile">
-                                <img src={matchedProfiles[currentProfileIndex].imageUrl} alt="Profile" />
-                                <h2>{matchedProfiles[currentProfileIndex].name}</h2>
-                                <p>{matchedProfiles[currentProfileIndex].description}</p>
+                            <img src={`data:image/jpeg;base64,${matchedProfiles[currentProfileIndex].pfp}`}></img>
+                                <h2>{matchedProfiles[currentProfileIndex].firstName}</h2>
+                                <p>{matchedProfiles[currentProfileIndex].bio}</p>
                             </div>
+                         
                             <div className="favorite-music">
-                                <p><strong>Favorite Song:</strong> {matchedProfiles[currentProfileIndex].favoriteSong}</p>
-                                <p><strong>Favorite Artist:</strong> {matchedProfiles[currentProfileIndex].favoriteArtist}</p>
-                                <p><strong>Favorite Genre:</strong> {matchedProfiles[currentProfileIndex].favoriteGenre}</p>
+                            <strong>Favorite Songs:</strong>
+                    <ul>
+                        {matchedProfiles[currentProfileIndex].favSong && matchedProfiles[currentProfileIndex].favSong.length > 0 && (
+                            // Render favSong only when the array is not null or empty
+                            matchedProfiles[currentProfileIndex].favSong.map((song, index) => (
+                                <li key={index}>{song}</li>
+                            ))
+                        )}
+                    </ul>
+                                <strong>Favorite Artists:</strong>
+                    <ul>
+                        {matchedProfiles[currentProfileIndex].favArtist && matchedProfiles[currentProfileIndex].favArtist.length > 0 && (
+                            // Render favArtist only when the array is not null or empty
+                            matchedProfiles[currentProfileIndex].favArtist.map((artist, index) => (
+                                <li key={index}>{artist}</li>
+                            ))
+                        )}
+                    </ul>
                             </div>
                         </div>
-                        <div className="button-container">
-                            <div className="button" onClick={handlePreviousProfile}>
+                        <div className="arrows-button-container">
+                            <div className="arrows-button" onClick={handlePreviousProfile}>
                                 &lt;
                             </div>
-                            <div className="button" onClick={handleNextProfile}>
+                            <div className="arrows-button" onClick={handleNextProfile}>
                                 &gt;
                             </div>
                         </div>
+                        </div>
+                        ) : (
+                            // Render a loading state or message when matchedProfiles is empty
+                            <p>Loading profiles...</p>
+                        )}
                     </div>
             </div>
         </div>

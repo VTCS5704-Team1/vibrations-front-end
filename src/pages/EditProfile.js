@@ -19,6 +19,8 @@ export default function EditProfile({onCreation} ) {
     const [selectedArtists, setSelectedArtists] =  useState([]);
     const [radius, setRadius] = useState(50.0); // State for radius
     const [pfp, setPfp] = useState(null);
+    const [uploaded, setUploaded] = useState(false);
+    const [profileCreated, setProfileCreated] = useState(false);
 
     const handleChangeRadius = (event) => {
         setRadius(parseInt(event.target.value));
@@ -55,6 +57,8 @@ export default function EditProfile({onCreation} ) {
                     "Authorization": "Bearer " + storedUserObject.token,
                   },
             })
+            console.log(response);
+            setUploaded(true);
         } catch (error) {
             console.log("error uploading file", error);
         }
@@ -89,7 +93,6 @@ export default function EditProfile({onCreation} ) {
             "Authorization": "Bearer " + storedUserObject.token
         }
   });
-
     console.log(response.data);
     onCreation();
     navigate('/profile');
@@ -110,6 +113,7 @@ export default function EditProfile({onCreation} ) {
                 <h3>Upload Profile Picture </h3>
                 <input type="file" onChange={handleFileChange} />
                 <button className="button" onClick={fileUpload}> Upload </button>
+                {uploaded ? (<p>Profile picture uploaded!</p>) : (<p>Please upload a profile picture</p>)}
                 
                     <h3>{userData.firstName}</h3>
                     <p> Add a bio that says a little about you </p>

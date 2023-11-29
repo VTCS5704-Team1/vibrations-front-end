@@ -129,7 +129,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         setSelectedArtistsCount((count) => count - 1);
       } else {
         if (selectedArtistsCount < 5) {
-          const updatedSelectedArtists = [...selectedArtists, clickedArtist];
+          const updatedSelectedArtists = [...selectedArtists, clickedArtist.name];
           setSelectedArtists(updatedSelectedArtists);
           setSelectedArtistsCount((count) => count + 1);
         } else {
@@ -155,7 +155,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         setSelectedSongsCount((count) => count - 1);
       } else {
         if (selectedSongsCount < 5) {
-          const updatedSelectedSongs = [...selectedSongs, clickedSong];
+          const updatedSelectedSongs = [...selectedSongs, `${clickedSong.name} - ${clickedSong.artist}`];
           setSelectedSongs(updatedSelectedSongs);
           setSelectedSongsCount((count) => count + 1);
         } else {

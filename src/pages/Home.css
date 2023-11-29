@@ -22,5 +22,26 @@ body {
     left: 100;
 }
 
+.arrows-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  .arrows-button {
+    padding: 10px 20px;
+    background-color: #222; /* Change the background color as needed */
+    color: #fff; /* Change the text color as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Optional: Add styles for hover and active states */
+  .arrows-button:hover,
+.arrows-button:focus {
+  opacity: .75;
+}
+
 
 

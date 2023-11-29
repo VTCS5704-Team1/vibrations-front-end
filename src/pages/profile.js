@@ -9,8 +9,6 @@ import getUserData from '../springboot states/getUserAccess';
 
 export default function Profile({onSelect}) {
 
-  const {userDataP, updateUserData} = useUserData();
-
   const storedUserDataJSON = localStorage.getItem('userData');
 
   // Parse the JSON string back to an object
@@ -34,6 +32,8 @@ export default function Profile({onSelect}) {
 
 
     async function getUserData() {
+
+      console.log(storedEmail);
 
     const encodedEmail = encodeURIComponent(storedEmail);
     try {
@@ -63,13 +63,6 @@ export default function Profile({onSelect}) {
       getUserData();
     }, []);
 
-   
-
-      const navigate = useNavigate();
-
-      const handleClick = () => {
-        navigate("/EditProfile");
-      }
     
       return (
         <div >
@@ -100,7 +93,6 @@ export default function Profile({onSelect}) {
            
           </div>
           </div>
-          <button className="button" onClick={handleClick}>Edit Profile</button>
           </div> 
         </div>
 
