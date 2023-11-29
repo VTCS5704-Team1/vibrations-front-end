@@ -92,17 +92,14 @@ export default function EditProfile({onCreation} ) {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + storedUserObject.token
         }
-  });
-    console.log(response.data);
-    onCreation();
-    navigate('/profile');
-} catch (error) {
-  console.error('Error saving profile:', error);
-}
+    });
+        console.log(response.data);
+        onCreation();
         navigate('/profile');
+    } catch (error) {
+        console.error('Error saving profile:', error);
+        }
     }
-
-
     return (
         <div>
             <Navbar />
@@ -113,7 +110,7 @@ export default function EditProfile({onCreation} ) {
                 <h3>Upload Profile Picture </h3>
                 <input type="file" onChange={handleFileChange} />
                 <button className="button" onClick={fileUpload}> Upload </button>
-                {uploaded ? (<p>Profile picture uploaded!</p>) : (<p>Please upload a profile picture</p>)}
+                {uploaded ? (<p style={{color:'green'}}>Profile picture uploaded!</p>) : (<p style={{color:'red'}}>Please upload a profile picture</p>)}
                 
                     <h3>{userData.firstName}</h3>
                     <p> Add a bio that says a little about you </p>

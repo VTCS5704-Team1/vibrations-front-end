@@ -15,8 +15,11 @@ const Homepage = ({onSelect}) => {
         favoriteSong: 'Radioactive',
         favoriteArtist: 'Maroon 5',
         favoriteGenre: 'Pop',
-        imageUrl: 'https://trendingdpz.com/wp-content/uploads/2023/03/19711ffe7c7684073729f00b08606433.jpg',
     },]);
+
+    const [matchedPfps, setMatchedPfps] = useState([{
+        imageData: ''
+    }]);
 
     async function getAllUsers() {
         var storedJsonString = localStorage.getItem('user');
@@ -42,9 +45,35 @@ const Homepage = ({onSelect}) => {
           console.error('Error fetching all matches:', error);
         }
       }
+
+      async function getAllPfp() {
+        var storedJsonString = localStorage.getItem('user');
+      
+        // Parse the JSON string back into an object
+        var storedUserObject = JSON.parse(storedJsonString);
+      
+        try {
+          const r = await axios({
+            method: "GET",
+            url: `http://localhost:5000/api/users/allPfp`,
+            /* params: {
+              "email": userData.email,
+            }, */
+            headers: {
+              "Authorization": "Bearer " + storedUserObject.token,
+            },
+          });
+          console.log(r.data); 
+          const filteredPfps = r.data.filter(pfp => pfp.email !== userData.email);
+            setMatchedPfps(filteredPfps);
+        } catch (error) {
+          console.error('Error fetching all pfps:', error);
+        }
+      }
       
       useEffect(() => {
         getAllUsers();
+        getAllPfp();
       }, []);
 
 
@@ -90,7 +119,7 @@ const Homepage = ({onSelect}) => {
                         </div>
                         <div className="container">
                             <div className="profile">
-                            <img src={`data:image/jpeg;base64,${matchedProfiles[currentProfileIndex].pfp}`}></img>
+                            <img src={`data:image/jpeg;base64,${matchedPfps[currentProfileIndex].imageData}`}></img>
                                 <h2>{matchedProfiles[currentProfileIndex].firstName}</h2>
                                 <p>{matchedProfiles[currentProfileIndex].bio}</p>
                             </div>
