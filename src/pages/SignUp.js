@@ -76,7 +76,7 @@ export default function SignUp({ onLogin }) {
 
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/users/register',
+          'http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/register',
           {
             email: formData.email,
             password: formData.password,
