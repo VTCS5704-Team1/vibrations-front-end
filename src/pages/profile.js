@@ -39,7 +39,7 @@ export default function Profile({onSelect}) {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:5000/api/users/getUser?email=${encodedEmail}`,
+        url: `http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/getUser?email=${encodedEmail}`,
         /* params: {
           "email": userData.email,
         }, */

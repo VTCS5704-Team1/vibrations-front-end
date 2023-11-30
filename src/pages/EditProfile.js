@@ -50,7 +50,7 @@ export default function EditProfile({onCreation} ) {
         try {
             const response = await axios({
                 method: "POST",
-                url: "http://localhost:5000/api/images/upload",
+                url: "http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/images/upload",
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -87,7 +87,7 @@ export default function EditProfile({onCreation} ) {
     try {
         console.log(body)
         console.log(storedUserObject.token);
-        const response = await axios.post('http://localhost:5000/api/users/registerUser', body, {
+        const response = await axios.post('http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/registerUser', body, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + storedUserObject.token

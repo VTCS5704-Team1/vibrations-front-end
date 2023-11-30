@@ -10,7 +10,7 @@ async function getAllUsers() {
     try {
       axios({
         method: "GET",
-        url: `http://localhost:5000/api/users/all`,
+        url: `http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/all`,
         /* params: {
           "email": userData.email,
         }, */

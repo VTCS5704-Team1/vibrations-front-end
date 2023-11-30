@@ -13,7 +13,7 @@ async function getUserData({email, response}) {
       console.log(email);
       response = await axios({
         method: "GET",
-        url: `http://localhost:5000/api/users/getUser?email=${email}`,
+        url: `http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/getUser?email=${email}`,
         /* params: {
           "email": userData.email,
         }, */

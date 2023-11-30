@@ -28,7 +28,7 @@ export default function ChangePassword() {
             }
             axios({
               method: "post",
-              url: "http://localhost:5000/api/users/change/password",
+              url: "http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/change/password",
               headers: {
                 'Authorization': 'Bearer ' + storedUserObject.token,
                 "Content-type": "application/json"
