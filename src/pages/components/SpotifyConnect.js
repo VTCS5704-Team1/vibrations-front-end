@@ -6,7 +6,7 @@ const CLIENT_ID = "216ab5f16d6344838e5ff26a33888a6c";
 const CLIENT_SECRET = "7877da4703f2435b9635abfee3a917b6";
 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/EditProfile";
+const REDIRECT_URL_AFTER_LOGIN = "http://dev-vibrations-ui-final-env.eba-8gpticmp.us-east-2.elasticbeanstalk.com/EditProfile";
 
 const SPACE_DELIMITER = "%20"
 // lists out what we want to pull from users
