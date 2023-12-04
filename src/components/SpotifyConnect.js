@@ -154,17 +154,17 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         const songName = clickedSong.name;
         const artistName = clickedSong.artists[0].name;
 
-        const isSongSelected = selectedSongs.includes(`${songName} - ${artistName}`);
+        const isSongSelected = selectedSongs.includes(`${songName}`);
 
         if (isSongSelected) {
             const updatedSelectedSongs = selectedSongs.filter(
-                (song) => song !== `${songName} - ${artistName}`
+                (song) => song !== `${songName}`
             );
             setSelectedSongs(updatedSelectedSongs);
             setSelectedSongsCount((count) => count - 1);
         } else {
             if (selectedSongsCount < 5) {
-                const updatedSelectedSongs = [...selectedSongs, `${songName} - ${artistName}`];
+                const updatedSelectedSongs = [...selectedSongs, `${songName}`];
                 setSelectedSongs(updatedSelectedSongs);
                 setSelectedSongsCount((count) => count + 1);
             } else {
@@ -274,7 +274,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                 onClick={() => handleCheckboxClickSong(song)}
                                 id="flexCheckDefault"/>
                             <label class="form-check-label" for="flexCheckDefault">
-                                {song.name} - {song.artists[0].name}
+                                {song.name}
                             </label>
                         </div>
                     )
@@ -336,7 +336,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                             className="form-check-label"
                                             htmlFor={`flexCheckDefault-${song.id}`}
                                         >
-                                            {song.name} - {song.artists[0].name}
+                                            {song.name}
                                         </label>
                                     </div>
                                 ))}
