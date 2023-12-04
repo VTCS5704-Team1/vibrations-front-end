@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import logo from './vib_logo.jpg';
 import axios from 'axios';
 import LogInAccess from '../springboot states/loginAccess';
-import { useUserData } from './components/User';
+import { useUserData } from '../components/User';
 
+// gets the users longitude and latitude
 const GPSTrackerComponent = () => {
 
   const [location, setLocation] = useState({
@@ -18,8 +19,6 @@ const GPSTrackerComponent = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
-          console.log(latitude);
-          console.log(longitude);
         },
         (error) => {
           console.error('Error fetching location:', error);
@@ -34,7 +33,7 @@ const GPSTrackerComponent = () => {
 };
 
 
-
+// Creates a new user account in cognito
 export default function SignUp({ onLogin }) {
 
   const { userData, updateUserData } = useUserData();

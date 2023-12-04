@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import logo from './vib_logo.jpg';
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import LogInAccess from "../springboot states/loginAccess";
-import { useUserData } from "./components/User";
+import { useUserData } from "../components/User";
 
+
+// Log In page for a user
 function LoginPage({ onLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,7 +13,6 @@ function LoginPage({ onLogin }) {
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
     const {userData, updateUserData} = useUserData();
-    const [dataResponse, setDataResponse] = useState("");
 
     const handleUserLogin = () => {
 
@@ -40,8 +40,6 @@ function LoginPage({ onLogin }) {
       }
 
       console.log("logging in");
-      console.log(email);
-      console.log(password); 
       LogInAccess({ email, password});
 
       var storedJsonString = localStorage.getItem('user');

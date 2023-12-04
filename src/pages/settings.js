@@ -6,22 +6,9 @@ import ChangePassword from '../springboot states/changePasswordAccess';
 import DeleteAccount from '../springboot states/deleteAccountAccess';
 
 
+// Allows them to make changes to their account like deleting it and 
+// changing their password
 export default function Settings({onLogOut}) {
-
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  // State for managing GPS location/limits
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [radius, setRadius] = useState('');
-
-  // Function to handle GPS location/limits change
-  const handleLocationChange = () => {
-    // Implement location/limits change logic here
-    console.log('Location/limits changed successfully!');
-  };
 
   const navigate = useNavigate();
 
@@ -30,7 +17,6 @@ export default function Settings({onLogOut}) {
 
  // Parse the JSON string back into an object
   var storedUserObject = JSON.parse(storedJsonString);
-
   
   const handleLogout = () => {
 

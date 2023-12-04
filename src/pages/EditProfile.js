@@ -2,16 +2,17 @@ import Navbar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl } from 'react-bootstrap';
 import React, {useState } from 'react';
-import SpotifyConnect from './components/SpotifyConnect';
+import SpotifyConnect from '../components/SpotifyConnect';
 import axios from "axios"; 
 
+// Is supposed to allow the user to edit their profile but now 
+// Just allows for creation in sql.....
 export default function EditProfile({onCreation} ) {
     const navigate = useNavigate();
 
     // handles all user data storing local so when spotify relaunches data is still accessible
     const storedUserDataJSON = localStorage.getItem('userData');
     const userData = JSON.parse(storedUserDataJSON);
-    console.log("from local storage", userData);
 
     // fields set in edit profile page
     const [bio, setBio] =  useState("");
@@ -20,7 +21,6 @@ export default function EditProfile({onCreation} ) {
     const [radius, setRadius] = useState(50.0); // State for radius
     const [pfp, setPfp] = useState(null);
     const [uploaded, setUploaded] = useState(false);
-    const [profileCreated, setProfileCreated] = useState(false);
 
     const handleChangeRadius = (event) => {
         setRadius(parseInt(event.target.value));
@@ -43,10 +43,6 @@ export default function EditProfile({onCreation} ) {
         const formData = new FormData();
         formData.append("pfp", pfp);
         formData.append("email", userData.email);
-
-        formData.forEach((value, key) => {
-            console.log(key, value);
-          });
         try {
             const response = await axios({
                 method: "POST",
@@ -85,8 +81,6 @@ export default function EditProfile({onCreation} ) {
         
 
     try {
-        console.log(body)
-        console.log(storedUserObject.token);
         const response = await axios.post('http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/registerUser', body, {
         headers: {
             "Content-Type": "application/json",
@@ -104,7 +98,7 @@ export default function EditProfile({onCreation} ) {
         <div>
             <Navbar />
             <div className="vertical-container">
-                <h1>Edit Profile</h1>
+                <h1>Create Profile</h1>
                 <div className="container">
                 <div className="profile" style={{width: '65vh'}}>
                 <h3>Upload Profile Picture </h3>

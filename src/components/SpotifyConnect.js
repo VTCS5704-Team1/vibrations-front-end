@@ -28,6 +28,10 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
 }
 
+
+// connects users with spotifys api which allows them to either log in
+// to their spotify to get their top data or they can search the spotify
+// api for songs and artists they like
 const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, selectedSongs}) => {
     const [searchArtistInput, setSearchArtistInput] = useState("");
     const [searchSongInput, setSearchSongInput] = useState("");

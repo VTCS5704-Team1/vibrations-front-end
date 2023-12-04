@@ -2,23 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css'
 import Navbar from '../Navbar';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useUserData } from './components/User';
-import getUserData from '../springboot states/getUserAccess';
 
-export default function Profile({onSelect}) {
-
-  const storedUserDataJSON = localStorage.getItem('userData');
-
-  // Parse the JSON string back to an object
-  const userData = JSON.parse(storedUserDataJSON);
+// Generates the profile of the particular user
+export default function Profile() {
 
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
     const [songs, setSongs] = useState([]);
     const [artists, setArtists] = useState([]);
-    const [response, setResponse] = useState("");
     const [pfp, setPfp] = useState(null);
 
     var storedJsonString = localStorage.getItem('user');
@@ -33,22 +25,17 @@ export default function Profile({onSelect}) {
 
     async function getUserData() {
 
-      console.log(storedEmail);
-
     const encodedEmail = encodeURIComponent(storedEmail);
     try {
       const response = await axios({
         method: "GET",
         url: `http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/getUser?email=${encodedEmail}`,
-        /* params: {
-          "email": userData.email,
-        }, */
         headers: {
           "Authorization": "Bearer " + storedUserObject.token,
         },
       });
       console.log(response);
-      setName(response.data.firstName);
+        setName(response.data.firstName);
         setBio(response.data.bio);
         setSongs(response.data.topSongs);
         setArtists(response.data.topArtists);

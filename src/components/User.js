@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 
 const UserDataContext = createContext();
 
+// Stores user data
 export const UserDataProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     // Initial user data or an empty object

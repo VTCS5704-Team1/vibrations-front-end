@@ -5,6 +5,7 @@ import {
 import './openingScreen.css';
 import logo from './vib_logo.jpg';
 
+// Screen where user is prompted to log in or sign up
 export default function OpeningScreen() {
     return (
         <div className="small-vertical-container">

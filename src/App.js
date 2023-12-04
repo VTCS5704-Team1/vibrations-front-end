@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import Profile from "./pages/profile"
 import Settings from "./pages/settings";
 import Matches from "./pages/matches";
-import { Route, Routes, useNavigate} from "react-router-dom"
+import { Route, Routes} from "react-router-dom"
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import OpeningScreen from "./pages/OpeningScreen";
 import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile";
-import GpsComponent from "./pages/components/GpsComponent";
-import { UserDataProvider } from "./pages/components/User";
+import { UserDataProvider } from "./components/User";
 
+// Complete app overview
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +23,7 @@ function App() {
   };
 
   const handleCreation = () => {
+
     setIsCreated(true);
     setIsLoggedIn(true);
   }
@@ -50,9 +51,9 @@ function App() {
               <Routes>
               <Route path="/profile" element={<Profile />} />
               <Route path="/EditProfile" element={<EditProfile onCreation={handleCreation}/>} />
-              <Route path="/home" element={<Home onSelect={isCreated}/>} />
+              <Route path="/home" element={<Home/>} />
               <Route path="/settings" element={<Settings onLogOut ={handleLogOut} />} />
-              <Route path="/matches" element={<Matches onSelect={isCreated} />} />
+              <Route path="/matches" element={<Matches/>} />
               </Routes>
               </>
 

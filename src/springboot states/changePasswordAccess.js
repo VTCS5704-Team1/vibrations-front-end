@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-
+// Allows the user to change their password
 export default function ChangePassword() {
 
     const [currentPassword, setCurrentPassword] = useState('');
@@ -16,9 +16,6 @@ export default function ChangePassword() {
 
 
     const handleChangePassword = () => {
-        console.log("email", email);
-        console.log("current password", currentPassword);
-        console.log("new password", newPassword);
 
 
         try {
@@ -54,47 +51,47 @@ export default function ChangePassword() {
       };
 
       return (
-        <div className='vertically-aligned'>
-        <h3>Change Password</h3>
-        <form onSubmit={(e) => e.preventDefault()}>
-        <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Current Password:
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            New Password:
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Confirm Password:
-            <input
-              type="password"
-              value={confirmNewPassword}
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <button onClick={handleChangePassword}>Change Password</button>
-        </form>
+        <div>
+          <h3>Change Password</h3>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="currentPassword">Current Password:</label>
+              <input
+                type="password"
+                id="currentPassword"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="newPassword">New Password:</label>
+              <input
+                type="password"
+                id="newPassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="confirmNewPassword">Confirm Password:</label>
+              <input
+                type="password"
+                id="confirmNewPassword"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+              />
+            </div>
+            <button onClick={handleChangePassword}>Change Password</button>
+          </form>
         </div>
       );
-
 }

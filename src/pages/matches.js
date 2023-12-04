@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
-import './matches.css';
-import { useUserData } from './components/User';
+import { useUserData } from '../components/User';
 
-const MessengerWindow = ({ onSelect }) => {
+
+// Displays users who are matched so they can be messaged
+const MessengerWindow = () => {
     const { userData, updateUserData } = useUserData();
     const matches = userData.likedUsers;
 
     const [selectedMatch, setSelectedMatch] = useState(null);
-    const [messageInput, setMessageInput] = useState('');
     const [messages, setMessages] = useState([]);
     const [isCloseButtonVisible, setIsCloseButtonVisible] = useState(false);
 
@@ -72,66 +72,40 @@ const MessengerWindow = ({ onSelect }) => {
                 <header className="messenger-header">
                     <h1>Matched!</h1>
                 </header>
-                    <div className="messenger-body">
-                        <ul className="matches">
+                <div className="messenger-body">
+                    {matches.length === 0 ? (
+                        <p>Like some users to start conversations!</p>
+                    ) : (
+                        <div className="matches">
                             {matches.map((match) => (
-                                <li key={match.name}>
+                                <li key={match.name} className="match-row">
                                     <div className="match">
                                         <img
-                                            src={match.profileImageUrl}
+                                            src={`data:image/jpeg;base64,${match.pfp}`}
                                             className="match-profile-image"
                                         />
-                                        {match.firstName}
+                                        {match.name}
                                         <button
-                                            className="button"
+                                            className="match-button"
                                             onClick={() => handleMatchClick(match)}
+                                            style={{ width: '130px', fontSize: '12px' }}
                                         >
                                             Send Message
                                         </button>
                                     </div>
                                 </li>
                             ))}
-                        </ul>
+                        </div>
+                    )}
 
-                        {selectedMatch && (
-                            <div className="send-message-dialogue">
-                                <div className="messages" id="messages">
-                                    {messages.map((message) => (
-                                        <div key={message.messageId} className="message">
-                                            {message.senderEmail === userData.email ? (
-                                                <div className="sent-message">
-                                                    <p>{message.content}</p>
-                                                </div>
-                                            ) : (
-                                                <div className="received-message">
-                                                    <p>{message.content}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <input
-                                    type="text"
-                                    value={messageInput}
-                                    onChange={(e) => setMessageInput(e.target.value)}
-                                    placeholder="Type your message here..."
-                                />
-                                <button className="button" onClick={sendMessage}>
-                                    Send
-                                </button>
-
-                                {isCloseButtonVisible && (
-                                    <button className="button" onClick={handleCloseButtonClick}>
-                                        Close Message
-                                    </button>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                
-            </div></>
-
+                    {selectedMatch && (
+                        <div className="send-message-dialogue">
+                            {/* Your existing code for the message dialogue */}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </>
     );
 };
 

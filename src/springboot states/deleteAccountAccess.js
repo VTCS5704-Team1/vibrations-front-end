@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+// Allows the user to delete their account
 const DeleteAccount = ({onLogOut}) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [email, setEmail] = useState('');
