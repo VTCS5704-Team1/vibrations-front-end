@@ -1,22 +1,27 @@
 import axios from "axios";
 
+export default function LogInAccess({ email, password }) {
+  console.log("LogInAccess started");
 
-// Define a function component named LogInAccess that takes email and password as props 
-export default function LogInAccess({email, password}) {
-
-        axios.post("http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/login", {
+  return axios
+    .post(
+      "http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/login",
+      {
         email: email,
-        password: password
-      }, {
-        headers: {"Content-type": "application/json"}
-
-      }).then(r => {
-        // For a successful response
-        localStorage.setItem("user", JSON.stringify({email, token: r.data.accessToken}))
-      }) .catch(error => {
-        console.error("Error during login:", error);
-        window.alert("Wrong email or password");
-      });
-      
-
-    }
+        password: password,
+      },
+      {
+        headers: { "Content-type": "application/json" },
+      }
+    )
+    .then((response) => {
+      console.log("Login successful:", response.data);
+      localStorage.setItem("user", JSON.stringify({ email, token: response.data.accessToken }));
+      return response.data; // Resolve with the response data
+    })
+    .catch((error) => {
+      console.error("Error during login:", error);
+      window.alert("Wrong email or password");
+      throw error; // Rethrow the error to propagate it
+    });
+}

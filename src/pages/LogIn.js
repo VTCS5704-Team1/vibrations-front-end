@@ -14,9 +14,9 @@ function LoginPage({ onLogin }) {
     const navigate = useNavigate();
     const {userData, updateUserData} = useUserData();
 
-    const handleUserLogin = () => {
+    const handleUserLogin = async (event) => {
 
-      
+      event.preventDefault();
 
 
       // Set initial error values to empty
@@ -40,7 +40,7 @@ function LoginPage({ onLogin }) {
       }
 
       console.log("logging in");
-      LogInAccess({ email, password});
+      await LogInAccess({ email, password });
 
       var storedJsonString = localStorage.getItem('user');
 
@@ -89,7 +89,7 @@ function LoginPage({ onLogin }) {
           />
           <label className="errorLabel">{passwordError}</label>
         </div>
-        <button className="button" type="button" onClick={handleUserLogin}>
+        <button className="button" type="submit" onClick={handleUserLogin}>
         Login
         </button>
       </form>

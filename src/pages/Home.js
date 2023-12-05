@@ -1,7 +1,6 @@
 import Navbar from '../Navbar';
 import './Home.css'
 import {useEffect, useState} from "react";
-import { useUserData } from '../components/User';
 import axios from 'axios';
 import LikeButton from '../components/LikeButton';
 
@@ -68,7 +67,7 @@ const Homepage = () => {
           setPfp(response.data.pfp);
         } catch (error) {
           console.error('Error fetching user data:', error);
-          window.alert("Please create your profile!");
+          handleNextProfile(); // Move on to the next profile on error
         }
       }
 
