@@ -20,3 +20,6 @@ As of right now, unless I am provided with your spotify email and full first and
 - You can select the like button on the profile
 - If you select the matches tab on the navbar, you can see the liked matches for the user
 - You can view this users profile by clicking the my profile tab
+
+# Unit Tests
+Unit tests are primarily written in the back end deployment tab
