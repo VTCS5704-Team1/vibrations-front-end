@@ -36,6 +36,8 @@ Features that correctly function:
 - Change password
 - Delete account
 - Like a user, view them in matches tab
+- Matchmaking algorithm generates matches in your area
+  - these matches can be viewed by clicking vibrations in the top right of the nav bar
 
 Features that don't function: 
 - Send message
