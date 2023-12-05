@@ -23,3 +23,19 @@ As of right now, unless I am provided with your spotify email and full first and
 
 # Unit Tests
 Unit tests are primarily written in the back end repository
+
+# Acceptance Testing
+Features that correctly function: 
+- Sign up
+  - searching artists and songs through spotifys api
+  - adding songs and artists to selected
+  - spotify log in works, if you click it it will take you to the spotify page asking if you want to allow the app to access your data, unfortunately it won't generate anything for any users not predesignated in the spotify for developers platform
+  - uploading a pfp
+  - writing a bio, changing distance radius
+- Log in
+- Change password
+- Delete account
+- Like a user, view them in matches tab
+
+Features that don't function: 
+- Send message
