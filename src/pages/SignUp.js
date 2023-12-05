@@ -89,7 +89,6 @@ export default function SignUp({ onLogin }) {
             headers: { 'Content-type': 'application/json' },
           }
         );
-          console.log(response);
         if (response.status === 200) {
           const email = formData.email;
           const password = formData.password;
@@ -146,7 +145,6 @@ export default function SignUp({ onLogin }) {
       longitude: location.longitude,
       phoneNumber: formData.phoneNumber,
     };
-    console.log(userDataForm);
     const userDataJSON = JSON.stringify(userDataForm);
     localStorage.setItem('userData', userDataJSON);
   };
@@ -176,6 +174,7 @@ export default function SignUp({ onLogin }) {
             onChange={handleChange}
             required
           />
+        <p style={{fontSize: "10px", color: "blue", maxWidth: "200px" }}> Please make your password with 8 characters, an uppercase letter, a numerical character, and a special character</p>
         </div>
         <div>
           <label>First Name:</label>

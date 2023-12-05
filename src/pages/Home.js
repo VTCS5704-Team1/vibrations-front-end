@@ -66,7 +66,6 @@ const Homepage = () => {
           setSongs(response.data.topSongs);
           setArtists(response.data.topArtists);
           setPfp(response.data.pfp);
-          console.log(response.data.pfp);
         } catch (error) {
           console.error('Error fetching user data:', error);
           window.alert("Please create your profile!");

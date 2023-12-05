@@ -12,7 +12,6 @@ export default function LogInAccess({email, password}) {
 
       }).then(r => {
         // For a successful response
-        console.log(r.data);
         localStorage.setItem("user", JSON.stringify({email, token: r.data.accessToken}))
       }) .catch(error => {
         console.error("Error during login:", error);

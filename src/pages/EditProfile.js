@@ -36,6 +36,7 @@ export default function EditProfile({onCreation} ) {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setPfp(file);
+        setUploaded(true);
     };
 
     async function fileUpload() {
@@ -63,7 +64,10 @@ export default function EditProfile({onCreation} ) {
     
 
     const handleSave = async () => {
-        
+        if (!uploaded) {
+            alert('Please upload a profile picture.');
+            return;
+          }
 
          const body = {
             firstName: userData.firstName,
@@ -81,6 +85,7 @@ export default function EditProfile({onCreation} ) {
         
 
     try {
+        console.log(body);
         const response = await axios.post('http://dev-vibrations-api-final-env.eba-wpisspwu.us-east-2.elasticbeanstalk.com/api/users/registerUser', body, {
         headers: {
             "Content-Type": "application/json",
@@ -97,10 +102,10 @@ export default function EditProfile({onCreation} ) {
     return (
         <div>
             <Navbar />
-            <div className="vertical-container">
+            <div className="vertical-container" style={{height: '120vh'}}>
                 <h1>Create Profile</h1>
-                <div className="container">
-                <div className="profile" style={{width: '65vh'}}>
+                <div className="container" style={{height: '100vh'}}>
+                <div className="edit-profile" style={{width: '35%', textAlign:'center'}}>
                 <h3>Upload Profile Picture </h3>
                 <input type="file" onChange={handleFileChange} />
                 <button className="button" onClick={fileUpload}> Upload </button>

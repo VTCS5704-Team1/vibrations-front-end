@@ -48,27 +48,24 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
 
     useEffect(() => {
         if (window.location.hash) {
-            const { access_token, expires_in } = getReturnedParamsFromSpotifyAuth(
-                window.location.hash
-            );
-
-            var storedJsonString = localStorage.getItem('user');
-
-            // Parse the JSON string back into an object
-            var storedUserObject = JSON.parse(storedJsonString);
-
-            console.log(storedUserObject.token);
-
-
-
-            localStorage.setItem('accessToken', access_token);
-            localStorage.setItem('expiresIn', expires_in);
-
-
-            // Call the functions to fetch top artists and songs
-            fetchTopData();
+          const { access_token, expires_in } = getReturnedParamsFromSpotifyAuth(
+            window.location.hash
+          );
+      
+          var storedJsonString = localStorage.getItem('user');
+          var storedUserObject = JSON.parse(storedJsonString);
+      
+          localStorage.setItem('accessToken', access_token);
+          localStorage.setItem('expiresIn', expires_in);
+      
+          // Call the functions to fetch top artists and songs
+          fetchTopData();
+      
+          // Set the state for selected artists and songs
+          setSelectedArtists(selectedArtists || []);
+          setSelectedSongs(selectedSongs || []);
         }
-    }, []); // Empty dependency array to only run this effect on mount
+      }, []);
 
     const fetchTopData = async () => {
         const topParams = {
@@ -131,19 +128,20 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
 
         if (isArtistSelected) {
             const updatedSelectedArtists = selectedArtists.filter(
-                (artist) => artist !== artistName
+              (artist) => artist !== artistName
             );
             setSelectedArtists(updatedSelectedArtists);
             setSelectedArtistsCount((count) => count - 1);
-        } else {
+          } else {
             if (selectedArtistsCount < 5) {
-                const updatedSelectedArtists = [...selectedArtists, artistName];
-                setSelectedArtists(updatedSelectedArtists);
-                setSelectedArtistsCount((count) => count + 1);
+              const updatedSelectedArtists = [...selectedArtists, artistName];
+              setSelectedArtists(updatedSelectedArtists);
+              setSelectedArtistsCount((count) => count + 1);
             } else {
-                window.alert('You can select up to 5 artists.');
+              window.alert('You can select up to 5 artists.');
+            //   document.getElementById(`flexCheckDefault-${clickedArtist.id}`).checked = false;
             }
-        }
+          }
     };
 
     const handleCheckboxClickSong = (clickedSong) => {
@@ -152,30 +150,31 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
         }
 
         const songName = clickedSong.name;
-        const artistName = clickedSong.artists[0].name;
 
         const isSongSelected = selectedSongs.includes(`${songName}`);
 
         if (isSongSelected) {
-            const updatedSelectedSongs = selectedSongs.filter(
-                (song) => song !== `${songName}`
-            );
-            setSelectedSongs(updatedSelectedSongs);
-            setSelectedSongsCount((count) => count - 1);
-        } else {
-            if (selectedSongsCount < 5) {
-                const updatedSelectedSongs = [...selectedSongs, `${songName}`];
-                setSelectedSongs(updatedSelectedSongs);
-                setSelectedSongsCount((count) => count + 1);
-            } else {
-                window.alert('You can select up to 5 songs.');
-            }
-        }
+    const updatedSelectedSongs = selectedSongs.filter(
+      (song) => song !== `${songName}`
+    );
+    setSelectedSongs(updatedSelectedSongs);
+    setSelectedSongsCount((count) => count - 1);
+  } else {
+    if (selectedSongsCount < 5) {
+      const updatedSelectedSongs = [...selectedSongs, `${songName}`];
+      setSelectedSongs(updatedSelectedSongs);
+      setSelectedSongsCount((count) => count + 1);
+    } else {
+      window.alert('You can select up to 5 songs.');
+    //   document.getElementById(`flexCheckDefault-${songName}`).checked = false;
+    }
+  }
     };
 
 
     // search for artist
     async function searchArtist() {
+        setArtists([]);
         console.log("Search for " + searchArtistInput);
         var artistParameters = {
             method: 'GET',
@@ -194,6 +193,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
 
     // search for song
     async function searchSong() {
+        setSongs([]);
         console.log("Search for " + searchSongInput);
         var songParameters = {
             method: 'GET',
@@ -211,10 +211,10 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
     }
 
     return (
-        <div className="small-gray-container">
+        <div className="small-gray-container" style={{height: '80vh'}}>
             <div className="small-vertical">
                 <InputGroup className="mb-3" size="lg">
-                    <h3> Add some of your favorite artists </h3>
+                    <h3 style={{fontSize: '15px'}}> Add some of your favorite artists </h3>
                     <FormControl
                         placeholder="Search For Artist"
                         type="input"
@@ -240,7 +240,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                 value=""
                                 id="flexCheckDefault"
                                 onClick={() => handleCheckboxClickArtist(artist)}/>
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault" style={{fontSize:'13px'}}>
                                 {artist.name}
                             </label>
                         </div>
@@ -248,7 +248,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                 })}
 
                 <InputGroup className="mb-3" size="lg">
-                    <h3> Add some of your favorite songs </h3>
+                    <h3 style={{fontSize: '15px'}}> Add some of your favorite songs </h3>
                     <FormControl
                         placeholder="Search For Song"
                         type="input"
@@ -273,7 +273,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                 value=""
                                 onClick={() => handleCheckboxClickSong(song)}
                                 id="flexCheckDefault"/>
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault" style={{fontSize:'13px'}}>
                                 {song.name}
                             </label>
                         </div>
@@ -282,7 +282,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
 
 
             </div>
-            <div className="small-vertical">
+            <div className="small-vertical" style={{alignItems: "center"}}>
                 {showTopData ? (
                     // Content to display when showTopData is true (i.e., data is available)
                     <div>
@@ -291,8 +291,8 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                 ) : (
                     // Button to display when showTopData is false (i.e., data is not available)
                     <div>
-                        <p> Log in to your spotify to view your top songs and artists </p>
-                        <button className="button" onClick={handleLogin}>Spotify Login</button>
+                        <p > Log in to your spotify to view your top songs and artists </p>
+                        <button className="button" style={{width: '100px'}} onClick={handleLogin}>Spotify Login</button>
                     </div>
                 )}
 
@@ -315,6 +315,7 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                         <label
                                             className="form-check-label"
                                             htmlFor={`flexCheckDefault-${artist.id}`}
+                                            style={{fontSize: '15px'}}
                                         >
                                             {artist.name}
                                         </label>
@@ -341,26 +342,27 @@ const SpotifyConnect = ({setSelectedArtists, selectedArtists, setSelectedSongs, 
                                     </div>
                                 ))}
                             </div>
-                            <div className="small-vertical">
-                                <h3>Selected Artists</h3>
-                                <ul>
-                                    {selectedArtists.map((artist) => (
-                                        <li key={artist.id}>{artist}</li>
-                                    ))}
-                                </ul>
-
-                                <h3>Selected Songs</h3>
-                                <ul>
-                                    {selectedSongs.map((song) => (
-                                        <li key={song.id}>{song}</li>
-                                    ))}
-                                </ul>
-
-                            </div>
                         </>
 
                     )}
+                    
                 </div>
+            </div>
+            <div className="small-vertical" style={{width: '60vh'}}>
+                <h3>Selected Artists</h3>
+                    <ul>
+                        {selectedArtists.map((artist) => (
+                                <li key={artist.id}>{artist}</li>
+                            ))}
+                        </ul>
+
+                        <h3>Selected Songs</h3>
+                        <ul>
+                            {selectedSongs.map((song) => (
+                                <li key={song.id}>{song}</li>
+                                ))}
+                        </ul>
+
             </div>
         </div>
 
