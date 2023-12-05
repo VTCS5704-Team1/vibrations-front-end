@@ -10,6 +10,7 @@ As of right now, unless I am provided with your spotify email and full first and
 - Create a profile by searching and selecting up to 5 artists and songs, uploading a profile picture, and writing a bio
   - Since there is a limited amount of data in the database right now, it is unlikely you will have any matches.
 - Select the settings page in the navbar
+  - if you would like to experiment with other features, you may try changing your password or deleting your account
 - Select log out
 
 # Steps for Viewing Matches
