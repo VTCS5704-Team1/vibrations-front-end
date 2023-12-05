@@ -22,4 +22,4 @@ As of right now, unless I am provided with your spotify email and full first and
 - You can view this users profile by clicking the my profile tab
 
 # Unit Tests
-Unit tests are primarily written in the back end deployment tab
+Unit tests are primarily written in the back end repository
