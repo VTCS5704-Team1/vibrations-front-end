@@ -1,6 +1,14 @@
 # vibrations-front-end
 Project for CS 5704 - Software Engineering (Fall 2023)
 
+## 12/14/23
+* The AWS Cloud Account has been shut down.
+* This means that the following SaaS services have been lost:
+  * Image Hosting (S3)
+  * Authentication/Logging in (Cognito)
+  * User information/storage (Cognito/RDS SQL Database)
+* Thank you!
+
 # Instructions for Grader
 - Access the front end of the app here: http://dev-vib-ui-final-eb-env.eba-xvyd3ppt.us-east-2.elasticbeanstalk.com/ 
 # Steps for Registering
